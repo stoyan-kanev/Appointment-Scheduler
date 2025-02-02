@@ -1,3 +1,22 @@
 .nav{
-    background-color: #333;
+    background-color: #F4F6F9;
+    font-size: 24px;
+    padding: 8px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+.nav a{
+    color: #2C3E50;
+    padding: 6px;
+    transition: color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    border-radius 0.2s ease-in-out;
+}
+.nav a:hover{
+    color: #ffffff;
+    border-radius: 45%;
+    background-color: #4A90E2;
+
 }

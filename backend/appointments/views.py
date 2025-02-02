@@ -22,9 +22,6 @@ class AppointmentViewSet(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
 class GetSignalerAppointment(APIView):
 
     def get(self,request,id):

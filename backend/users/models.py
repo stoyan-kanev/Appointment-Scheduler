@@ -26,6 +26,3 @@ class User(AbstractUser):
         default=0,
         validators=[MinValueValidator(1), MaxValueValidator(100)],
     )
-    is_appointer = models.BooleanField(
-        default=False,
-    )

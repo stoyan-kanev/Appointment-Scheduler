@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -36,10 +37,10 @@ class UserLoginView(APIView):
 
                 user_data = UserSerializer(user).data
 
-                return Response({
-                    'token': token.key,
-                    'user': user_data  # TODO: REMOVE WHEN DEPLOY
-                }, status=status.HTTP_200_OK)
+                response = Response(user_data, status=status.HTTP_200_OK)
+                response.set_cookie('token', str(token))
+                return response
+
 
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 

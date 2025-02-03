@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {loginInfo} from '../types/login.interface';
+import {RegisterInterface} from '../types/register.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,10 @@ export class AuthService {
 
     login(loginData: loginInfo): Observable<any> {
         return this.http.post(this.API_URL + 'login', loginData, {withCredentials: true});
+    }
+
+    register(registerData:RegisterInterface): Observable<any> {
+        return this.http.post(this.API_URL + 'register', registerData, {withCredentials: true});
     }
 
 }

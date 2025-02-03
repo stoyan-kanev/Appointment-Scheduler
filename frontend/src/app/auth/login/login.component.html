@@ -1,8 +1,11 @@
-<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
-    <label>Username:</label>
-    <input type="text" formControlName="username" required />
-    <label>Password:</label>
-    <input type="text" formControlName="password" required />
+<div class="form-wrapper">
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+        <label>Username:</label>
+        <input type="text" formControlName="username" required />
+        <label>Password:</label>
+        <input type="text" formControlName="password" required />
 
-    <button type="submit" [disabled]="loginForm.invalid">Save Appointment</button>
-</form>
+        <button type="submit" [disabled]="loginForm.invalid">Save Appointment</button>
+    </form>
+
+</div>

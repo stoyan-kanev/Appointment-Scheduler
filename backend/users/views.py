@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -45,3 +47,25 @@ class UserLoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def verify_token(request):
+    token_key = request.COOKIES.get('token')
+
+    if not token_key:
+        return Response({'error': 'Token missing'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    try:
+        token = Token.objects.get(key=token_key)
+        user = token.user
+    except Token.DoesNotExist:
+        return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    return Response({'message': 'Token is valid', 'user': user.username}, status=200)
+
+@api_view(['POST'])
+def logout(request):
+    response = Response({"message": "Logged out"}, status=status.HTTP_200_OK)
+    response.delete_cookie('token')
+    return response

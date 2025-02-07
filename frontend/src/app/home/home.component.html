@@ -1,1 +1,30 @@
-<p>home works!</p>
+<div class="appointment-container">
+    <h2>Select Appointment Date</h2>
+
+    <!-- Date Picker -->
+    <mat-form-field appearance="outline">
+        <mat-label>Choose a Date</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Time Picker (Appears After Selecting a Date) -->
+    <div *ngIf="showTimePicker" class="time-picker">
+        <h3>Select Time</h3>
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a Time</mat-label>
+            <mat-select (selectionChange)="onTimeChange($event)">
+                <mat-option *ngFor="let time of timeSlots" [value]="time">
+                    {{ time }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- Display Selected Date & Time -->
+    <div *ngIf="selectedDate && selectedTime" class="selected-info">
+        <p><strong>Date:</strong> {{ selectedDate | date: 'fullDate' }}</p>
+        <p><strong>Time:</strong> {{ selectedTime }}</p>
+    </div>
+</div>

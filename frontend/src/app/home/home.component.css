@@ -1,0 +1,19 @@
+.appointment-container {
+    margin:150px auto;
+    max-width: 400px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.time-picker {
+    margin-top: 15px;
+}
+
+.selected-info {
+    margin-top: 20px;
+    padding: 10px;
+    background: #e3f2fd;
+    border-radius: 5px;
+}

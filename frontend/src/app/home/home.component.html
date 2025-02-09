@@ -1,5 +1,5 @@
 <div class="calendar-container">
-    <h2>Календар</h2>
+    <h2>Calendar</h2>
 
     <div class="month-navigation">
         <button mat-button (click)="changeMonth(-1)">
@@ -25,7 +25,7 @@
 
     <mat-expansion-panel *ngIf="selectedDay" expanded>
         <mat-expansion-panel-header>
-            <span>Свободни Часове за {{ selectedDay }}</span>
+            <span>Available hours on {{ selectedDay | date:'MMMM d, y' }}</span>
         </mat-expansion-panel-header>
 
         <div class="slots-container">
@@ -36,9 +36,18 @@
                     [ngClass]="{'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time)}"
                     (click)="openReservationPopup(slot.time)"
                     [disabled]="isSlotReserved(slot.time)">
-                    {{ isSlotReserved(slot.time) ? 'РЕЗЕРВИРАН' : 'РЕЗЕРВАЦИЯ' }}
+                    {{ isSlotReserved(slot.time) ? 'Reserved' : 'Reserve' }}
+                </button>
+
+                <!-- Details button for barbers -->
+                <button
+                    *ngIf="isBarber"
+                    mat-button
+                    (click)="viewAppointmentDetails(slot.time)">
+                    Details
                 </button>
             </div>
         </div>
     </mat-expansion-panel>
+
 </div>

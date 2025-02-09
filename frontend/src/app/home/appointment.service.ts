@@ -5,20 +5,21 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class ReservationService {
+export class AppointmentService {
     private apiUrl = 'http://127.0.0.1:8000/appointments/';
 
     constructor(private http: HttpClient) {}
 
-    getAppointments(): Observable<any> {
-        return this.http.get(this.apiUrl);
+
+    getAppointmentDetails(date: string | null, time: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}${date}/${time}`, { withCredentials: true });
     }
 
     createAppointment(data: any): Observable<any> {
         return this.http.post(this.apiUrl, data);
     }
 
-    getReservedSlots(date: string): Observable<any> {  // ✅ Fetch reserved slots for a day
+    getReservedSlots(date: string): Observable<any> {
         return this.http.get(`${this.apiUrl}reserved/${date}/`);
     }
 }

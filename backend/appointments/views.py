@@ -1,11 +1,13 @@
+from django.shortcuts import get_object_or_404
 from django.utils.dateparse import parse_datetime
-from django.utils.timezone import make_aware, get_current_timezone
 from rest_framework import status
+from .serializers import AppointmentSerializer
+from django.utils.timezone import make_aware, get_current_timezone
+from django.utils.timezone import localtime
+from datetime import datetime
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Appointment
-from .serializers import AppointmentSerializer
-from datetime import datetime
+from appointments.models import Appointment
 
 
 class AppointmentViewSet(APIView):
@@ -62,17 +64,6 @@ class GetSignalerAppointment(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-from datetime import datetime
-from django.utils.timezone import make_aware, get_current_timezone
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from appointments.models import Appointment
-
-from django.utils.timezone import localtime
-from datetime import datetime
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from appointments.models import Appointment
 
 class GetReservedSlots(APIView):
 
@@ -89,3 +80,20 @@ class GetReservedSlots(APIView):
             return Response({"reserved_slots": reserved_slots})
         except ValueError:
             return Response({"error": "Invalid date format. Expected YYYY-MM-DD"}, status=400)
+
+
+class GetAppointmentByDateTime(APIView):
+    def get(self, request, date, time):
+        try:
+            date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+
+            time_obj = datetime.strptime(time, "%H:%M").time()
+
+            appointment = get_object_or_404(Appointment, date_time__date=date_obj, date_time__time=time_obj)
+
+            serializer = AppointmentSerializer(appointment)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except ValueError:
+            return Response({"error": "Invalid date or time format. Expected YYYY-MM-DD and HH:MM"},
+                            status=status.HTTP_400_BAD_REQUEST)

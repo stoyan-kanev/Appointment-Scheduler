@@ -5,7 +5,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {ReservationPopupComponent} from './reservation-popup/reservation-popup.component';
-import {ReservationService} from './appointment.service';
+import {AppointmentService} from './appointment.service';
+import {AuthService} from '../auth/services/auth.service';
+import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-dialogue.component';
 
 @Component({
     selector: 'app-home',
@@ -24,10 +26,13 @@ export class HomeComponent {
     currentDate: Date = new Date();
     selectedDay: string | null = null;
     daysInMonth: any[] = [];
-    dayNames: string[] = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+    dayNames: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     reservedSlots: string[] = [];
-
-    constructor(private dialog: MatDialog, private reservationService: ReservationService) {
+    isBarber = false;
+    constructor(private dialog: MatDialog, private appointmentService: AppointmentService,private authService: AuthService) {
+        this.authService.getAuthStatus().subscribe(isAuthenticated => {
+            this.isBarber = isAuthenticated;
+        });
         this.generateMonth();
     }
 
@@ -89,7 +94,7 @@ export class HomeComponent {
 
             this.selectedDay = `${year}-${month}-${date}`;
 
-            this.reservationService.getReservedSlots(this.selectedDay)
+            this.appointmentService.getReservedSlots(this.selectedDay)
                 .subscribe(response => {
                     this.reservedSlots = response.reserved_slots;
                 }, error => {
@@ -113,6 +118,21 @@ export class HomeComponent {
             data: {date: this.selectedDay, time}
         });
     }
+    viewAppointmentDetails(time: string) {
+        this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
+            next: (appointment) => {
+                console.log("✅ Appointment Details Fetched:", appointment);
+                this.dialog.open(AppointmentDialogueComponent, {
+                    width: '400px',
+                    data: appointment
+                });
+            },
+            error: (err) => {
+                console.error('❌ Failed to fetch appointment details:', err);
+            }
+        });
+    }
+
 
 
 }

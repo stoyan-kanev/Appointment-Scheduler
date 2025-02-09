@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {ReservationService} from '../appointment.service';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AppointmentService} from '../appointment.service';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
@@ -18,7 +18,7 @@ export class ReservationPopupComponent {
 
     constructor(
         private fb: FormBuilder,
-        private reservationService: ReservationService,
+        private appointmentService: AppointmentService,
         public dialogRef: MatDialogRef<ReservationPopupComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { date: string; time: string }
     ) {
@@ -51,7 +51,7 @@ export class ReservationPopupComponent {
             };
 
 
-            this.reservationService.createAppointment(formData).subscribe({
+            this.appointmentService.createAppointment(formData).subscribe({
                 next: (response) => {
                     console.log('Appointment Created:', response);
                     this.dialogRef.close();
@@ -73,9 +73,7 @@ export class ReservationPopupComponent {
         const formattedDate = date;
 
         const formattedTime = time.split(" - ")[0];
-        const formattedDateTime = `${formattedDate} ${formattedTime}`;
-
-        return formattedDateTime;
+        return `${formattedDate} ${formattedTime}`;
     }
 
 

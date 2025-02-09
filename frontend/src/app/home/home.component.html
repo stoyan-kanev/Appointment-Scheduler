@@ -1,30 +1,48 @@
-<div class="appointment-container">
-    <h2>Select Appointment Date</h2>
+<div class="calendar-container">
+    <h2>Календар</h2>
 
-    <!-- Date Picker -->
-    <mat-form-field appearance="outline">
-        <mat-label>Choose a Date</mat-label>
-        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <!-- Time Picker (Appears After Selecting a Date) -->
-    <div *ngIf="showTimePicker" class="time-picker">
-        <h3>Select Time</h3>
-        <mat-form-field appearance="outline">
-            <mat-label>Choose a Time</mat-label>
-            <mat-select (selectionChange)="onTimeChange($event)">
-                <mat-option *ngFor="let time of timeSlots" [value]="time">
-                    {{ time }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <!-- Month Navigation -->
+    <div class="month-navigation">
+        <button mat-button (click)="changeMonth(-1)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span>{{ currentDate | date: 'MMMM yyyy' }}</span>
+        <button mat-button (click)="changeMonth(1)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
     </div>
 
-    <!-- Display Selected Date & Time -->
-    <div *ngIf="selectedDate && selectedTime" class="selected-info">
-        <p><strong>Date:</strong> {{ selectedDate | date: 'fullDate' }}</p>
-        <p><strong>Time:</strong> {{ selectedTime }}</p>
+    <!-- Weekday Names -->
+    <div class="calendar-grid weekdays">
+        <div *ngFor="let dayName of dayNames" class="weekday">
+            {{ dayName }}
+        </div>
     </div>
+
+    <!-- Calendar Grid -->
+    <div class="calendar-grid">
+        <div *ngFor="let day of daysInMonth" class="day" [ngClass]="{'empty': !day}" (click)="selectDay(day)">
+            <span *ngIf="day">{{ day.date.getDate() }}</span>
+        </div>
+    </div>
+
+    <!-- Time Slots -->
+    <mat-expansion-panel *ngIf="selectedDay" expanded>
+        <mat-expansion-panel-header>
+            <span>Свободни Часове за {{ selectedDay }}</span>
+        </mat-expansion-panel-header>
+
+        <div class="slots-container">
+            <div *ngFor="let slot of getSelectedDaySlots(); let i = index" class="slot">
+                <span class="time">{{ slot.time }}</span>
+                <button
+                    mat-button
+                    [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
+                    (click)="reserveSlot(i)"
+                    [disabled]="slot.reserved">
+                    {{ slot.reserved ? 'РЕЗЕРВИРАН' : 'РЕЗЕРВАЦИЯ' }}
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel>
 </div>

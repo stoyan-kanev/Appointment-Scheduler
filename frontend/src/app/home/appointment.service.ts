@@ -6,18 +6,19 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class ReservationService {
-    private apiUrl = 'http://127.0.0.1:8000/api/appointments/'; // Update with your Django API URL
+    private apiUrl = 'http://127.0.0.1:8000/appointments/';
 
     constructor(private http: HttpClient) {}
 
-    // Fetch all appointments
     getAppointments(): Observable<any> {
         return this.http.get(this.apiUrl);
     }
 
-    // Create a new appointment
-    reserveSlot(date: string, time: string, userId: string): Observable<any> {
-        const payload = { date, time, user_id: userId };
-        return this.http.post(this.apiUrl, payload);
+    createAppointment(data: any): Observable<any> {
+        return this.http.post(this.apiUrl, data);
+    }
+
+    getReservedSlots(date: string): Observable<any> {  // ✅ Fetch reserved slots for a day
+        return this.http.get(`${this.apiUrl}reserved/${date}/`);
     }
 }

@@ -1,0 +1,27 @@
+<h2 mat-dialog-title class="popup-title">РЕЗЕРВИРАЙ СЕГА</h2>
+
+<form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+    <div class="selected-slot">
+        📅 <strong>{{ data.date }} от {{ data.time }}</strong>
+    </div>
+
+    <mat-form-field class="full-width">
+        <input matInput formControlName="first_name" placeholder="Име..." required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput formControlName="last_name" placeholder="Фамилия..." required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput formControlName="email" placeholder="Имейл адрес..." required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput formControlName="phone" placeholder="Телефон..." required>
+    </mat-form-field>
+
+    <button mat-button type="submit" class="submit-btn" [disabled]="reservationForm.invalid">
+        ➡ ПРОДЪЛЖИ
+    </button>
+</form>

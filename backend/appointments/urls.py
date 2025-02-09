@@ -1,8 +1,8 @@
 from django.urls import path
-
-from appointments.views import AppointmentViewSet, GetSignalerAppointment
+from .views import AppointmentViewSet, GetSignalerAppointment, GetReservedSlots
 
 urlpatterns = [
     path('', AppointmentViewSet.as_view(), name='appointments'),
-    path('<int:id>', GetSignalerAppointment.as_view(), name='appointments'),
+    path('<int:id>/', GetSignalerAppointment.as_view(), name='appointment-detail'),
+    path('reserved/<str:date>/', GetReservedSlots.as_view(), name='reserved-appointments'),
 ]

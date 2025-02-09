@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {ReservationPopupComponent} from './reservation-popup/reservation-popup.component';
 
 @Component({
     selector: 'app-home',
@@ -11,7 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
         CommonModule,
         MatExpansionModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatDialogModule,
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
@@ -20,9 +23,9 @@ export class HomeComponent {
     currentDate: Date = new Date();
     selectedDay: string | null = null;
     daysInMonth: any[] = [];
-    dayNames: string[] = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']; // Days start from Monday
+    dayNames: string[] = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
-    constructor() {
+    constructor(private dialog: MatDialog) {
         this.generateMonth();
     }
 
@@ -34,7 +37,6 @@ export class HomeComponent {
 
         this.daysInMonth = [];
 
-        // Adjust first day to start on Monday
         let adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
 
         for (let i = 0; i < adjustedFirstDay; i++) {
@@ -45,37 +47,44 @@ export class HomeComponent {
             this.daysInMonth.push({
                 date: new Date(year, month, day),
                 slots: [
-                    { time: '15:00 - 16:30', reserved: false },
-                    { time: '16:30 - 18:00', reserved: false },
-                    { time: '18:00 - 19:30', reserved: Math.random() > 0.7 }, // Random reserved
-                    { time: '19:30 - 21:00', reserved: false },
-                    { time: '21:00 - 22:30', reserved: false }
+                    // It can be changed to proper appointment times
+                    { time: '15:00 - 16:30' },
+                    { time: '16:30 - 18:00' },
+                    { time: '18:00 - 19:30' },
+                    { time: '19:30 - 21:00' },
+                    { time: '21:00 - 22:30' }
                 ]
             });
         }
     }
-
     changeMonth(offset: number) {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + offset, 1);
         this.generateMonth();
         this.selectedDay = null;
     }
+    getSelectedDaySlots() {
+        if (!this.selectedDay) return [];
+
+        const day = this.daysInMonth.find(d => d && d.date.toISOString().split('T')[0] === this.selectedDay);
+        return day ? day.slots : [];
+    }
 
     selectDay(day: any) {
         if (day) {
-            this.selectedDay = day.date.toLocaleDateString('bg-BG', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            this.selectedDay = day.date.toISOString().split('T')[0];
         }
     }
 
-    getSelectedDaySlots() {
-
-        return this.daysInMonth.find(d => d && d.date.toLocaleDateString('bg-BG') === this.selectedDay)?.slots || [];
-    }
-
-    reserveSlot(slotIndex: number) {
-        const day = this.daysInMonth.find(d => d && d.date.toLocaleDateString('bg-BG') === this.selectedDay);
-        if (day) {
-            day.slots[slotIndex].reserved = true;
+    openReservationPopup(time: string) {
+        if (!this.selectedDay) {
+            console.error("No date selected!");
+            return;
         }
+
+        this.dialog.open(ReservationPopupComponent, {
+            width: '400px',
+            data: { date: this.selectedDay, time }
+        });
     }
+
 }

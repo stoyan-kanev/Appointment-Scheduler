@@ -1,15 +1,13 @@
 from django.db import models
 
-from users.models import User
-
-
-# Create your models here.
 
 class Appointment(models.Model):
-    person = models.CharField(max_length=254,default="")
-    phone = models.CharField(max_length=254,default="")
-    date_time = models.DateTimeField()
+    first_name = models.CharField(max_length=100, default="Unknown")
+    last_name = models.CharField(max_length=100, default="Person")
+    email = models.EmailField(default="unknown@example.com")
+    phone = models.CharField(max_length=20, default="0000000000")
+    date_time = models.DateTimeField(auto_now_add=True)
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.person} - {self.date_time.strftime('%d.%m.%Y %H:%M')}"
+        return f"{self.first_name} {self.last_name} - {self.date_time.strftime('%d.%m.%Y %H:%M')}"

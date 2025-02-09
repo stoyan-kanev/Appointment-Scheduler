@@ -84,7 +84,7 @@ class GetReservedSlots(APIView):
 
             reserved_slots = [localtime(appt.date_time).strftime("%H:%M") for appt in reserved_appointments]
 
-            print(f"🔹 Corrected Reserved Slots for {date}: {reserved_slots}") 
+            print(f"🔹 Corrected Reserved Slots for {date}: {reserved_slots}")
 
             return Response({"reserved_slots": reserved_slots})
         except ValueError:

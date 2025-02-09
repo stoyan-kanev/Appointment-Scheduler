@@ -88,12 +88,10 @@ export class HomeComponent {
             const date = String(day.date.getDate()).padStart(2, '0');
 
             this.selectedDay = `${year}-${month}-${date}`;
-            console.log("Selected Day:", this.selectedDay);
 
             this.reservationService.getReservedSlots(this.selectedDay)
                 .subscribe(response => {
                     this.reservedSlots = response.reserved_slots;
-                    console.log("Reserved Slots:", this.reservedSlots);
                 }, error => {
                     console.error("Error fetching reserved slots:", error);
                 });
@@ -111,7 +109,7 @@ export class HomeComponent {
         }
 
         this.dialog.open(ReservationPopupComponent, {
-            width: '400px',
+            width: '800px',
             data: {date: this.selectedDay, time}
         });
     }

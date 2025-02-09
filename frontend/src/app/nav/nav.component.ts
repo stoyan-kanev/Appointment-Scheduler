@@ -1,29 +1,22 @@
 import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import {AuthService} from '../auth/services/auth.service';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-nav',
     imports: [
         RouterLink,
-        NgIf
+        RouterLinkActive,
+        NgClass,
     ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
-    isAuthenticated = false;
+    isMenuOpen = false;
 
-    constructor(private authService: AuthService) {}
-
-    ngOnInit() {
-        this.authService.getAuthStatus().subscribe(status => {
-            this.isAuthenticated = status;
-        });
-    }
-
-    logout() {
-        this.authService.logout();
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
     }
 }

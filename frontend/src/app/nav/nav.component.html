@@ -1,6 +1,22 @@
-<div class="nav">
-    <a routerLink="/">Home</a>
-    <a *ngIf="!isAuthenticated" routerLink="/login">Login</a>
-    <a *ngIf="!isAuthenticated" routerLink="/register">Register</a>
-    <a *ngIf="isAuthenticated" (click)="logout()">Logout</a>
-</div>
+<nav class="navbar">
+    <div class="logo">
+        <a routerLink="/">💈 Elite Barber</a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <ul class="nav-links">
+        <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+    </ul>
+
+    <!-- Mobile Menu Button -->
+    <div class="menu-toggle" (click)="toggleMenu()">
+        ☰
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <ul class="mobile-menu" [ngClass]="{ 'open': isMenuOpen }">
+        <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Home</a></li>
+        <li><a routerLink="/about" routerLinkActive="active" (click)="toggleMenu()">About</a></li>
+    </ul>
+</nav>

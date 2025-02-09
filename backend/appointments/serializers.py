@@ -1,12 +1,11 @@
+from django.utils.timezone import activate, localtime
 from rest_framework import serializers
-from datetime import datetime
-from .models import Appointment
+
+from appointments.models import Appointment
+
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    date_time = serializers.DateTimeField(
-        format="%d.%m.%Y %H:%M",  # ✅ Django will send the date in this format
-        input_formats=["%d.%m.%Y %H:%M", "%Y-%m-%d %H:%M"]  # ✅ Accepts multiple formats
-    )
+    date_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M", input_formats=["%Y-%m-%d %H:%M", "%d.%m.%Y %H:%M"])
 
     class Meta:
         model = Appointment

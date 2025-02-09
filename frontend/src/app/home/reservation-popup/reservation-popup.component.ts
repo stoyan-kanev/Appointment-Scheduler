@@ -29,14 +29,19 @@ export class ReservationPopupComponent {
             phone: ['', [Validators.required, Validators.pattern('[0-9]{10,15}')]]
         });
     }
-
     submitForm() {
         if (this.reservationForm.valid) {
+
+            if (!this.data.date || !this.data.time) {
+                console.error("Missing Date or Time!");
+                return;
+            }
+
             const formattedDateTime = this.formatDateTime(this.data.date, this.data.time);
 
-            console.log("Formatted DateTime Before Sending:", formattedDateTime);
+
             if (!formattedDateTime) {
-                console.error("Failed to format date correctly!");
+                console.error("Formatted DateTime is Empty!");
                 return;
             }
 
@@ -45,7 +50,6 @@ export class ReservationPopupComponent {
                 date_time: formattedDateTime
             };
 
-            console.log("Final Payload Sent to API:", formData);
 
             this.reservationService.createAppointment(formData).subscribe({
                 next: (response) => {
@@ -59,22 +63,22 @@ export class ReservationPopupComponent {
         }
     }
 
+
     formatDateTime(date: string, time: string): string {
         if (!date || !time) {
             console.error("Invalid date or time:", date, time);
             return "";
         }
 
+        const formattedDate = date;
 
-        const dateParts = date.split('-');
-        if (dateParts.length !== 3) {
-            console.error("Invalid date format:", date);
-            return "";
-        }
+        const formattedTime = time.split(" - ")[0];
+        const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
-        const [year, month, day] = dateParts;
-        return `${day}.${month}.${year} ${time.split(" - ")[0]}`;
+        return formattedDateTime;
     }
+
+
 
 
 }

@@ -48,11 +48,11 @@ export class HomeComponent {
                 date: new Date(year, month, day),
                 slots: [
                     // It can be changed to proper appointment times
-                    { time: '15:00 - 16:30' },
-                    { time: '16:30 - 18:00' },
-                    { time: '18:00 - 19:30' },
-                    { time: '19:30 - 21:00' },
-                    { time: '21:00 - 22:30' }
+                    { time: '15:00' },
+                    { time: '15:30' },
+                    { time: '16:00' },
+                    { time: '16:30' },
+                    { time: '17:00' }
                 ]
             });
         }
@@ -65,15 +65,32 @@ export class HomeComponent {
     getSelectedDaySlots() {
         if (!this.selectedDay) return [];
 
-        const day = this.daysInMonth.find(d => d && d.date.toISOString().split('T')[0] === this.selectedDay);
+        const day = this.daysInMonth.find(d => {
+            if (!d) return false;
+
+            const localDate = new Date(d.date.getFullYear(), d.date.getMonth(), d.date.getDate());
+            const formattedDate = `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, '0')}-${String(localDate.getDate()).padStart(2, '0')}`;
+
+            return formattedDate === this.selectedDay;
+        });
+
         return day ? day.slots : [];
     }
 
+
     selectDay(day: any) {
         if (day) {
-            this.selectedDay = day.date.toISOString().split('T')[0];
+            const localDate = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
+
+            const year = localDate.getFullYear();
+            const month = String(localDate.getMonth() + 1).padStart(2, '0');
+            const date = String(localDate.getDate()).padStart(2, '0');
+
+            this.selectedDay = `${year}-${month}-${date}`;
         }
     }
+
+
 
     openReservationPopup(time: string) {
         if (!this.selectedDay) {
@@ -86,5 +103,6 @@ export class HomeComponent {
             data: { date: this.selectedDay, time }
         });
     }
+
 
 }

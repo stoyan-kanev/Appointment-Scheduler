@@ -33,12 +33,12 @@ class AppointmentViewSet(APIView):
 
         serializer = AppointmentSerializer(data=data)
         if serializer.is_valid():
-            instance = serializer.save()  # ✅ Save and get instance
+            instance = serializer.save()
             print(
-                f"✅ SAVED TO DATABASE: ID={instance.id}, DATE={instance.date_time}, Timezone={instance.date_time.tzinfo}")  # ✅ Log saved entry
+                f"SAVED TO DATABASE: ID={instance.id}, DATE={instance.date_time}, Timezone={instance.date_time.tzinfo}")  # ✅ Log saved entry
             return Response(AppointmentSerializer(instance).data, status=status.HTTP_201_CREATED)
 
-        print("🔴 Validation Error:", serializer.errors)
+        print("Validation Error:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -62,13 +62,30 @@ class GetSignalerAppointment(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+from datetime import datetime
+from django.utils.timezone import make_aware, get_current_timezone
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from appointments.models import Appointment
+
+from django.utils.timezone import localtime
+from datetime import datetime
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from appointments.models import Appointment
+
 class GetReservedSlots(APIView):
 
     def get(self, request, date):
         try:
-            date_obj = datetime.strptime(date, "%d.%m.%Y").date()
+            date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+
             reserved_appointments = Appointment.objects.filter(date_time__date=date_obj)
-            reserved_slots = [appt.date_time.strftime("%H:%M") for appt in reserved_appointments]
+
+            reserved_slots = [localtime(appt.date_time).strftime("%H:%M") for appt in reserved_appointments]
+
+            print(f"🔹 Corrected Reserved Slots for {date}: {reserved_slots}") 
+
             return Response({"reserved_slots": reserved_slots})
         except ValueError:
-            return Response({"error": "Invalid date format. Expected DD.MM.YYYY"}, status=400)
+            return Response({"error": "Invalid date format. Expected YYYY-MM-DD"}, status=400)

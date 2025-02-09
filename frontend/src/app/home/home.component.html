@@ -33,10 +33,10 @@
                 <span class="time">{{ slot.time }}</span>
                 <button
                     mat-button
-                    [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
+                    [ngClass]="{'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time)}"
                     (click)="openReservationPopup(slot.time)"
-                    [disabled]="slot.reserved">
-                    {{ slot.reserved ? 'РЕЗЕРВИРАН' : 'РЕЗЕРВАЦИЯ' }}
+                    [disabled]="isSlotReserved(slot.time)">
+                    {{ isSlotReserved(slot.time) ? 'РЕЗЕРВИРАН' : 'РЕЗЕРВАЦИЯ' }}
                 </button>
             </div>
         </div>

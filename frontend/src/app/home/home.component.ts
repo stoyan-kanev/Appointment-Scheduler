@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {ReservationPopupComponent} from './reservation-popup/reservation-popup.component';
+import {ReservationService} from './appointment.service';
 
 @Component({
     selector: 'app-home',
@@ -24,8 +25,9 @@ export class HomeComponent {
     selectedDay: string | null = null;
     daysInMonth: any[] = [];
     dayNames: string[] = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+    reservedSlots: string[] = [];
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog, private reservationService: ReservationService) {
         this.generateMonth();
     }
 
@@ -48,20 +50,22 @@ export class HomeComponent {
                 date: new Date(year, month, day),
                 slots: [
                     // It can be changed to proper appointment times
-                    { time: '15:00' },
-                    { time: '15:30' },
-                    { time: '16:00' },
-                    { time: '16:30' },
-                    { time: '17:00' }
+                    {time: '15:00'},
+                    {time: '15:30'},
+                    {time: '16:00'},
+                    {time: '16:30'},
+                    {time: '17:00'}
                 ]
             });
         }
     }
+
     changeMonth(offset: number) {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + offset, 1);
         this.generateMonth();
         this.selectedDay = null;
     }
+
     getSelectedDaySlots() {
         if (!this.selectedDay) return [];
 
@@ -77,20 +81,28 @@ export class HomeComponent {
         return day ? day.slots : [];
     }
 
-
     selectDay(day: any) {
         if (day) {
-            const localDate = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-
-            const year = localDate.getFullYear();
-            const month = String(localDate.getMonth() + 1).padStart(2, '0');
-            const date = String(localDate.getDate()).padStart(2, '0');
+            const year = day.date.getFullYear();
+            const month = String(day.date.getMonth() + 1).padStart(2, '0');
+            const date = String(day.date.getDate()).padStart(2, '0');
 
             this.selectedDay = `${year}-${month}-${date}`;
+            console.log("Selected Day:", this.selectedDay);
+
+            this.reservationService.getReservedSlots(this.selectedDay)
+                .subscribe(response => {
+                    this.reservedSlots = response.reserved_slots;
+                    console.log("Reserved Slots:", this.reservedSlots);
+                }, error => {
+                    console.error("Error fetching reserved slots:", error);
+                });
         }
     }
 
-
+    isSlotReserved(time: string): boolean {
+        return this.reservedSlots.includes(time);
+    }
 
     openReservationPopup(time: string) {
         if (!this.selectedDay) {
@@ -100,7 +112,7 @@ export class HomeComponent {
 
         this.dialog.open(ReservationPopupComponent, {
             width: '400px',
-            data: { date: this.selectedDay, time }
+            data: {date: this.selectedDay, time}
         });
     }
 

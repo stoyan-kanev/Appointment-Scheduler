@@ -181,7 +181,7 @@ export class HomeComponent {
     viewAppointmentDetails(time: string) {
         this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
             next: (appointment) => {
-                console.log("✅ Appointment Details Fetched:", appointment);
+                // console.log("✅ Appointment Details Fetched:", appointment);
                 this.dialog.open(AppointmentDialogueComponent, {
                     width: '400px',
                     data: appointment

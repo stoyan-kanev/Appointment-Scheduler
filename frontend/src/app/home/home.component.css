@@ -147,6 +147,17 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+    .calendar-container {
+        padding: 15px;
+        margin: 20px 10px;
+    }
+
+    .month-navigation {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
     .calendar-grid {
         gap: 5px;
     }
@@ -156,8 +167,53 @@ button:hover {
         height: 50px;
     }
 
-    .month-navigation {
+    .slot {
         flex-direction: column;
+        align-items: flex-start;
+        padding: 8px;
+    }
+
+    .time {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-container {
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .month-navigation {
+        display: flex;
+        flex-direction: row;
         gap: 10px;
+    }
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+    .weekdays{
+        display: none;
+    }
+    .day {
+        height: 45px;
+        font-size: 0.95rem;
+    }
+
+    .month-navigation button {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .slot {
+        max-width: 100%;
+    }
+
+    .slot button {
+        width: 100%;
     }
 }

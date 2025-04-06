@@ -64,6 +64,7 @@
 
 .mobile-menu.open {
     display: flex;
+    z-index: 9;
 }
 
 .mobile-menu li {

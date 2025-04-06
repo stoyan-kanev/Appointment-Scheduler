@@ -159,9 +159,21 @@ export class HomeComponent {
             return;
         }
 
-        this.dialog.open(ReservationPopupComponent, {
+        const dialogRef = this.dialog.open(ReservationPopupComponent, {
             width: '800px',
             data: { date: this.selectedDay, time }
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === 'reserved') {
+                console.log("🔁 Refreshing reserved slots after reservation...");
+                this.appointmentService.getReservedSlots(this.selectedDay)
+                    .subscribe(response => {
+                        this.reservedSlots = response.reserved_slots;
+                    }, error => {
+                        console.error("Error refreshing reserved slots:", error);
+                    });
+            }
         });
     }
 

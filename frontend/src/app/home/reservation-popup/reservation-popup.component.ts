@@ -55,7 +55,7 @@ export class ReservationPopupComponent {
             this.appointmentService.createAppointment(formData).subscribe({
                 next: (response) => {
                     console.log('Appointment Created:', response);
-                    this.dialogRef.close();
+                    this.dialogRef.close('reserved');
                 },
                 error: (error) => {
                     console.error('Error creating appointment:', error);

@@ -29,7 +29,8 @@ export class HomeComponent {
     dayNames: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     reservedSlots: string[] = [];
     isBarber = false;
-    constructor(private dialog: MatDialog, private appointmentService: AppointmentService,private authService: AuthService) {
+
+    constructor(private dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
         this.authService.getAuthStatus().subscribe(isAuthenticated => {
             this.isBarber = isAuthenticated;
         });
@@ -54,7 +55,6 @@ export class HomeComponent {
             this.daysInMonth.push({
                 date: new Date(year, month, day),
                 slots: [
-                    // It can be changed to proper appointment times
                     {time: '15:00'},
                     {time: '15:30'},
                     {time: '16:00'},
@@ -64,7 +64,19 @@ export class HomeComponent {
             });
         }
     }
-
+    canGoToPreviousMonth(): boolean {
+        const now = new Date();
+        return (
+            this.currentDate.getFullYear() > now.getFullYear() ||
+            (this.currentDate.getFullYear() === now.getFullYear() &&
+                this.currentDate.getMonth() > now.getMonth())
+        );
+    }
+    canGoToNextMonth(): boolean {
+        const now = new Date();
+        const maxDate = new Date(now.getFullYear(), now.getMonth() + 12, 1);
+        return this.currentDate < maxDate;
+    }
     changeMonth(offset: number) {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + offset, 1);
         this.generateMonth();
@@ -74,20 +86,43 @@ export class HomeComponent {
     getSelectedDaySlots() {
         if (!this.selectedDay) return [];
 
+        const selectedDate = new Date(this.selectedDay);
+        const now = new Date();
+
+        const isToday = selectedDate.toDateString() === now.toDateString();
+
         const day = this.daysInMonth.find(d => {
             if (!d) return false;
-
             const localDate = new Date(d.date.getFullYear(), d.date.getMonth(), d.date.getDate());
-            const formattedDate = `${localDate.getFullYear()}-${String(localDate.getMonth() + 1).padStart(2, '0')}-${String(localDate.getDate()).padStart(2, '0')}`;
-
-            return formattedDate === this.selectedDay;
+            return localDate.toDateString() === selectedDate.toDateString();
         });
 
-        return day ? day.slots : [];
+        if (!day) return [];
+
+        if (isToday) {
+            return day.slots.filter((slot: { time: string }) => {
+                const [hours, minutes] = slot.time.split(':').map(Number);
+                const slotTime = new Date(selectedDate);
+                slotTime.setHours(hours, minutes, 0, 0);
+                return slotTime > now;
+            });
+        }
+
+        return day.slots;
     }
+
 
     selectDay(day: any) {
         if (day) {
+            const today = new Date();
+            const selectedDate = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
+
+            // Без избор на минали дни
+            if (selectedDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
+                console.warn("❌ Cannot select a past date.");
+                return;
+            }
+
             const year = day.date.getFullYear();
             const month = String(day.date.getMonth() + 1).padStart(2, '0');
             const date = String(day.date.getDate()).padStart(2, '0');
@@ -113,11 +148,24 @@ export class HomeComponent {
             return;
         }
 
+        const [hours, minutes] = time.split(':').map(Number);
+        const selectedDateTime = new Date(this.selectedDay);
+        selectedDateTime.setHours(hours, minutes, 0, 0);
+
+        const now = new Date();
+
+        if (selectedDateTime < now) {
+            console.warn("⛔ Cannot reserve a time slot in the past.");
+            return;
+        }
+
         this.dialog.open(ReservationPopupComponent, {
             width: '800px',
-            data: {date: this.selectedDay, time}
+            data: { date: this.selectedDay, time }
         });
     }
+
+
     viewAppointmentDetails(time: string) {
         this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
             next: (appointment) => {
@@ -132,7 +180,6 @@ export class HomeComponent {
             }
         });
     }
-
 
 
 }

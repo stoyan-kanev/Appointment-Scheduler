@@ -4,14 +4,15 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {AppointmentService} from '../appointment.service';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
     selector: 'app-reservation-popup',
     standalone: true,
     templateUrl: './reservation-popup.component.html',
     styleUrl: './reservation-popup.component.css',
-    imports: [ReactiveFormsModule, MatFormField, MatDialogTitle, MatInput, MatButton]
+    imports: [ReactiveFormsModule, MatFormField, MatDialogTitle, MatInput, MatButton, MatIconButton, MatIcon]
 })
 export class ReservationPopupComponent {
     reservationForm: FormGroup;
@@ -63,7 +64,9 @@ export class ReservationPopupComponent {
         }
     }
 
-
+    closeDialog() {
+        this.dialogRef.close();
+    }
     formatDateTime(date: string, time: string): string {
         if (!date || !time) {
             console.error("Invalid date or time:", date, time);

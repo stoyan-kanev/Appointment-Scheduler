@@ -2,11 +2,23 @@
     <h2>Calendar</h2>
 
     <div class="month-navigation">
-        <button mat-button (click)="changeMonth(-1)">
+        <button
+            mat-button
+            (click)="changeMonth(-1)"
+            [disabled]="!canGoToPreviousMonth()"
+            [class.disabled]="!canGoToPreviousMonth()"
+        >
             <mat-icon>chevron_left</mat-icon>
         </button>
+
         <span>{{ currentDate | date: 'MMMM yyyy' }}</span>
-        <button mat-button (click)="changeMonth(1)">
+
+        <button
+            mat-button
+            (click)="changeMonth(1)"
+            [disabled]="!canGoToNextMonth()"
+            [class.disabled]="!canGoToNextMonth()"
+        >
             <mat-icon>chevron_right</mat-icon>
         </button>
     </div>

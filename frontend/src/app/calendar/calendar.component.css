@@ -13,7 +13,7 @@
 h2 {
     font-size: 2rem;
     font-weight: bold;
-    color: #f0c040;
+    color: #73c62e;
     margin-bottom: 15px;
 }
 
@@ -26,7 +26,7 @@ h2 {
 }
 
 .month-navigation button {
-    background: #f0c040;
+    background: #73c62e;
     color: #1a1a1a;
     border: none;
     padding: 8px 12px;
@@ -58,7 +58,7 @@ h2 {
     font-size: 1rem;
     text-transform: uppercase;
     padding: 5px;
-    color: #f0c040;
+    color: #73c62e;
 }
 
 .day {
@@ -76,7 +76,7 @@ h2 {
 }
 
 .day:hover {
-    background: #f0c040;
+    background: #73c62e;
     color: black;
 }
 
@@ -117,7 +117,7 @@ h2 {
 }
 
 button {
-    background: #f0c040;
+    background: #73c62e;
     color: black;
     border: none;
     padding: 8px 12px;
@@ -128,7 +128,7 @@ button {
 }
 
 button:hover {
-    background: #ffcc00;
+    background: #508722;
 }
 
 .reserved {

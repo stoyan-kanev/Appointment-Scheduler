@@ -5,7 +5,22 @@
             <h1 class="home-title">Welcome to our barber shop</h1>
             <div class="button-wrapper">
                 <a [routerLink]="['/book']" class="book-btn">Book Now</a>
-                <a [routerLink]="['/about']" class="contact-btn">Contact</a>
+            </div>
+            <div class="help-text-wrapper">
+                <h2>You are served by professional barbers.</h2>
+                    <p>The desired man is the well-groomed man. Trust our team of expert barbers to craft and refine your modern look.
+                    Enjoy some manly time for yourself — and we'll make sure you leave with a smile and come back again.</p>
+            </div>
+            <div class="carousel-strip">
+                <div class="carousel-track">
+                    <div class="carousel-item" *ngFor="let img of images">
+                        <img [src]="img" alt="Image" />
+                    </div>
+                    <!-- дублираме за seamless looping -->
+                    <div class="carousel-item" *ngFor="let img of images">
+                        <img [src]="img" alt="Image" />
+                    </div>
+                </div>
             </div>
 
         </div>

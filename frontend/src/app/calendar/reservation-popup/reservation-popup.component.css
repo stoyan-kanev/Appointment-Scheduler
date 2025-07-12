@@ -17,7 +17,7 @@
 .popup-title {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #f0c040;
+    color: #73c62e;
     text-align: center;
     margin: 0;
 }
@@ -30,7 +30,7 @@
     padding: 10px 14px;
     border-radius: 10px;
     margin: 0px 0 20px;
-    color: #f0c040;
+    color: #73c62e;
     font-weight: 500;
     text-align: center;
 }
@@ -86,7 +86,7 @@ form {
 
 /* Бутон */
 .submit-btn {
-    background: #f0c040;
+    background: #73c62e;
     color: #121212;
     font-size: 1.1rem;
     font-weight: 600;
@@ -99,7 +99,7 @@ form {
 }
 
 .submit-btn:hover {
-    background: #ffd740;
+    background: #359126;
 }
 
 .submit-btn:disabled {
@@ -132,5 +132,5 @@ form {
 }
 
 .close-btn:hover {
-    color: #f0c040;
+    color: #73c62e;
 }

@@ -13,7 +13,7 @@
 .logo a {
     font-size: 24px;
     font-weight: bold;
-    color: #f0c040;
+    color:#73c62e;
     text-decoration: none;
 }
 
@@ -37,8 +37,8 @@
 }
 
 .nav-links a:hover, .nav-links a.active {
-    color: #f0c040;
-    border-bottom: 2px solid #f0c040;
+    color: #73c62e;
+    border-bottom: 2px solid #73c62e;
 }
 
 /* Mobile Menu Button */

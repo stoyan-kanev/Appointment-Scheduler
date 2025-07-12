@@ -91,11 +91,12 @@
 .carousel-strip {
     overflow: hidden;
     width: 100%;
+    max-width: 800px;
     height: auto;
     position: relative;
+    margin: 0 auto;
+    padding: 1rem 0;
 }
-
-
 
 .carousel-item {
     flex: 0 0 auto;
@@ -111,7 +112,7 @@
 .carousel-track {
     display: flex;
     width: fit-content;
-    animation: scroll-left 30s linear infinite;
+    animation: scroll-left 15s linear infinite;
 }
 
 @keyframes scroll-left {

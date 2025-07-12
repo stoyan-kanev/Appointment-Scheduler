@@ -12,7 +12,7 @@ import {MatIcon} from '@angular/material/icon';
     standalone: true,
     templateUrl: './reservation-popup.component.html',
     styleUrl: './reservation-popup.component.css',
-    imports: [ReactiveFormsModule, MatFormField, MatDialogTitle, MatInput, MatButton, MatIconButton, MatIcon]
+    imports: [ReactiveFormsModule, MatFormField, MatDialogTitle, MatInput, MatButton, MatIconButton]
 })
 export class ReservationPopupComponent {
     reservationForm: FormGroup;

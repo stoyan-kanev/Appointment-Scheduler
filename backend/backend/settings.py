@@ -73,10 +73,10 @@ REST_FRAMEWORK = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "appointment_scheduler",
-        "USER": "postgreuser",
-        "PASSWORD": "password",
-        "HOST": "10.70.71.110",
+        "NAME": "appointment",
+        "USER": "admin",
+        "PASSWORD": "strongpassword",
+        "HOST": "10.70.71.118",
         "PORT": "5432",
     }
 }

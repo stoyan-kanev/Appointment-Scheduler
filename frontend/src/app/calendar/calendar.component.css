@@ -37,7 +37,8 @@ h2 {
 }
 
 .month-navigation button:hover {
-    background: #ffcc00;
+    background: #73c62e;
+
 }
 
 .calendar-grid {
@@ -86,9 +87,10 @@ h2 {
 }
 
 .day.selected {
-    background: #ffcc00;
+    background: #73c62e;
+
     color: black;
-    box-shadow: 0 4px 8px rgba(255, 204, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(26, 255, 0, 0.5);
 }
 
 .slots-container {
@@ -131,11 +133,11 @@ button:hover {
     background: #508722;
 }
 .background-image {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     object-fit: cover;
     z-index: -1;
 }

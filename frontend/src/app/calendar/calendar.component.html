@@ -48,7 +48,6 @@
             <div *ngFor="let slot of getSelectedDaySlots()" class="slot">
                 <span class="time">{{ slot.time }}</span>
                 <button
-                    mat-button
                     [ngClass]="{ 'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time) }"
                     (click)="openReservationPopup(slot.time)"
                     [disabled]="isSlotReserved(slot.time)">

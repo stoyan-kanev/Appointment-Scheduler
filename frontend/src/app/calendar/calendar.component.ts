@@ -29,6 +29,8 @@ export class CalendarComponent {
     dayNames: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     reservedSlots: string[] = [];
     isBarber = false;
+    showSlots = true;
+
 
     constructor(private dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
         this.authService.getAuthStatus().subscribe(isAuthenticated => {
@@ -64,6 +66,7 @@ export class CalendarComponent {
             });
         }
     }
+
     canGoToPreviousMonth(): boolean {
         const now = new Date();
         return (
@@ -72,11 +75,13 @@ export class CalendarComponent {
                 this.currentDate.getMonth() > now.getMonth())
         );
     }
+
     canGoToNextMonth(): boolean {
         const now = new Date();
         const maxDate = new Date(now.getFullYear(), now.getMonth() + 12, 1);
         return this.currentDate < maxDate;
     }
+
     changeMonth(offset: number) {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + offset, 1);
         this.generateMonth();
@@ -111,13 +116,15 @@ export class CalendarComponent {
         return day.slots;
     }
 
+    hideSlots(): void {
+        this.showSlots = false;
+    }
 
     selectDay(day: any) {
         if (day) {
             const today = new Date();
             const selectedDate = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-
-            // Без избор на минали дни
+            this.showSlots = true
             if (selectedDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
                 console.warn("❌ Cannot select a past date.");
                 return;
@@ -136,6 +143,16 @@ export class CalendarComponent {
                     console.error("Error fetching reserved slots:", error);
                 });
         }
+    }
+
+    isPastDay(day: any): boolean {
+        if (!day || !day.date) return true;
+
+        const today = new Date();
+        const target = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
+        const now = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        return target < now;
     }
 
     isSlotReserved(time: string): boolean {
@@ -161,7 +178,7 @@ export class CalendarComponent {
 
         const dialogRef = this.dialog.open(ReservationPopupComponent, {
             width: '800px',
-            data: { date: this.selectedDay, time }
+            data: {date: this.selectedDay, time}
         });
 
         dialogRef.afterClosed().subscribe((result) => {

@@ -130,7 +130,15 @@ button {
 button:hover {
     background: #508722;
 }
-
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
 .reserved {
     background: #cc0000 !important;
     color: white !important;
@@ -216,4 +224,69 @@ button:hover {
     .slot button {
         width: 100%;
     }
+}
+.calendar-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.calendar-container {
+    flex: 1 1 500px;
+    max-width: 600px;
+}
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.close-button {
+    background: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-button:hover {
+    color: #ff4d4d;
+}
+.slots-panel {
+    flex: 1 1 400px;
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.slide-in-right {
+    animation: slideInFromRight 0.5s ease forwards;
+}
+
+.disabled-day {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: auto;
+    background: #1f1f1f;
+}
+
+.disabled-day:hover {
+    background: #1f1f1f;
+    color: white;
 }

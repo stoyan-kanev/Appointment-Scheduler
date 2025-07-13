@@ -1,65 +1,64 @@
-<div class="calendar-container">
-    <h2>Calendar</h2>
+<img class="background-image" src="/bg.jpg" alt="background image" />
 
-    <div class="month-navigation">
-        <button
-            mat-button
-            (click)="changeMonth(-1)"
-            [disabled]="!canGoToPreviousMonth()"
-            [class.disabled]="!canGoToPreviousMonth()"
-        >
-            <mat-icon>chevron_left</mat-icon>
-        </button>
+<div class="calendar-layout">
+    <!-- Календар -->
+    <div class="calendar-container">
+        <h2>Calendar</h2>
 
-        <span>{{ currentDate | date: 'MMMM yyyy' }}</span>
+        <div class="month-navigation">
+            <button mat-button (click)="changeMonth(-1)" [disabled]="!canGoToPreviousMonth()" [class.disabled]="!canGoToPreviousMonth()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>{{ currentDate | date: 'MMMM yyyy' }}</span>
+            <button mat-button (click)="changeMonth(1)" [disabled]="!canGoToNextMonth()" [class.disabled]="!canGoToNextMonth()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
 
-        <button
-            mat-button
-            (click)="changeMonth(1)"
-            [disabled]="!canGoToNextMonth()"
-            [class.disabled]="!canGoToNextMonth()"
-        >
-            <mat-icon>chevron_right</mat-icon>
-        </button>
-    </div>
+        <div class="calendar-grid weekdays">
+            <div *ngFor="let dayName of dayNames" class="weekday">{{ dayName }}</div>
+        </div>
 
-    <div class="calendar-grid weekdays">
-        <div *ngFor="let dayName of dayNames" class="weekday">
-            {{ dayName }}
+        <div class="calendar-grid">
+            <div
+                *ngFor="let day of daysInMonth"
+                class="day"
+                [ngClass]="{
+    'empty': !day,
+    'disabled-day': isPastDay(day),
+    'selected': selectedDay === (day?.date | date: 'yyyy-MM-dd')
+  }"
+                (click)="!isPastDay(day) && selectDay(day)">
+                <span *ngIf="day">{{ day.date.getDate() }}</span>
+            </div>
+
         </div>
     </div>
 
-    <div class="calendar-grid">
-        <div *ngFor="let day of daysInMonth" class="day" [ngClass]="{'empty': !day}" (click)="selectDay(day)">
-            <span *ngIf="day">{{ day.date.getDate() }}</span>
+    <!-- Панел с часове -->
+    <div *ngIf="selectedDay && showSlots" class="slots-panel slide-in-right">
+        <div class="panel-header">
+            <h3>Available hours on {{ selectedDay | date: 'MMMM d, y' }}</h3>
+            <button mat-icon-button (click)="hideSlots()" class="close-button">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
-    </div>
-
-    <mat-expansion-panel *ngIf="selectedDay" expanded>
-        <mat-expansion-panel-header>
-            <span>Available hours on {{ selectedDay | date:'MMMM d, y' }}</span>
-        </mat-expansion-panel-header>
 
         <div class="slots-container">
-            <div *ngFor="let slot of getSelectedDaySlots(); let i = index" class="slot">
+            <div *ngFor="let slot of getSelectedDaySlots()" class="slot">
                 <span class="time">{{ slot.time }}</span>
                 <button
                     mat-button
-                    [ngClass]="{'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time)}"
+                    [ngClass]="{ 'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time) }"
                     (click)="openReservationPopup(slot.time)"
                     [disabled]="isSlotReserved(slot.time)">
                     {{ isSlotReserved(slot.time) ? 'Reserved' : 'Reserve' }}
                 </button>
 
-                <!-- Details button for barbers -->
-                <button
-                    *ngIf="isBarber"
-                    mat-button
-                    (click)="viewAppointmentDetails(slot.time)">
+                <button *ngIf="isBarber" mat-button (click)="viewAppointmentDetails(slot.time)">
                     Details
                 </button>
             </div>
         </div>
-    </mat-expansion-panel>
-
+    </div>
 </div>

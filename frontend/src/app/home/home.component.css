@@ -57,12 +57,12 @@
     width: 16rem;
     font-weight: 500;
     border-radius: 1.5rem;
-    background-color: #73c62e;
+    background-color:  #c6b22e;
     font-size: 2rem;
     color: #000;
 
     /* 3D Effect */
-    box-shadow: 0 8px 0 #4d8f1e, 0 8px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 0 #938216, 0 8px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease-in-out;
     transform: perspective(500px);
     cursor: pointer;
@@ -71,7 +71,7 @@
 
 .book-btn:hover {
     background-color: #000000;
-    color:#73c62e;
+    color: #c6b22e;
     box-shadow: 0 2px 0 #494949, 0 2px 6px rgba(34, 32, 32, 0.2);
     transform: translateY(-2px);
 }
@@ -103,7 +103,7 @@
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 2rem;
-    background-color: rgba(99, 188, 32, 0.6);
+    background-color: rgba(188, 175, 32, 0.6);
     width: 30rem;
     text-align: center;
 }

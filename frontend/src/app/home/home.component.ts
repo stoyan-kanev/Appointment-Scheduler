@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {I18nService} from '../services/i18n.service';
 
 @Component({
     selector: 'app-home',
@@ -23,7 +24,7 @@ export class HomeComponent {
     ];
     currentSlide = 0;
     intervalId: any;
-
+    constructor(public i18n: I18nService) {}
     ngOnInit() {
         this.intervalId = setInterval(() => {
             this.currentSlide = (this.currentSlide + 1) % this.images.length;

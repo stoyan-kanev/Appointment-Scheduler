@@ -1,9 +1,13 @@
 /* General Navbar Styling */
 .navbar {
+    position: fixed;
     display: flex;
+    z-index: 10;
+    width: 100%;
+
     justify-content: space-between;
     align-items: center;
-    background: #222;
+    background-color: rgba(0, 0, 0, 0.8);
     padding: 0 30px;
     color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -81,7 +85,20 @@
     color: white;
     font-size: 18px;
 }
-
+.btn-wrapper{
+    display: flex;
+    gap: 15px;
+}
+.lang-btn{
+    color: white;
+}
+.lang-btn:nth-child(2){
+    padding-left: 15px;
+    border-left: 1px solid white;
+}
+.lang-btn:hover{
+    color: #aa881a;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-links {

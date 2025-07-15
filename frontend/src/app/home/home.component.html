@@ -2,27 +2,55 @@
     <img class="background-image" src="/bg.jpg" alt="background image" />
     <div class="overlay">
         <div class="text-wrapper">
-            <h1 class="home-title">Welcome to our barber shop</h1>
+            <h1 class="home-title">{{ i18n.t('welcome') }}</h1>
+
             <div class="button-wrapper">
-                <a [routerLink]="['/book']" class="book-btn">Book Now</a>
+                <a [routerLink]="['/book']" class="book-btn">{{ i18n.t('bookNow') }}</a>
             </div>
+
             <div class="help-text-wrapper">
-                <h2>You are served by professional barbers.</h2>
-                    <p>The desired man is the well-groomed man. Trust our team of expert barbers to craft and refine your modern look.
-                    Enjoy some manly time for yourself — and we'll make sure you leave with a smile and come back again.</p>
+                <h2>{{ i18n.t('servedByPros') }}</h2>
+                <p>{{ i18n.t('wellGroomedText') }}</p>
             </div>
+
             <div class="carousel-strip">
+                <h1 class="our-team-title">{{ i18n.t('ourTeam') }}</h1>
                 <div class="carousel-track">
                     <div class="carousel-item" *ngFor="let img of images">
                         <img [src]="img" alt="Image" />
                     </div>
-                    <!-- дублираме за seamless looping -->
                     <div class="carousel-item" *ngFor="let img of images">
                         <img [src]="img" alt="Image" />
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <footer class="footer">
+            <div class="footer-box">
+                <h2>{{ i18n.t('openingHours') }}</h2>
+                <p>
+                    {{ i18n.t('monFri') }}<br />
+                    {{ i18n.t('saturday') }}<br />
+                    {{ i18n.t('sunday') }}
+                </p>
+            </div>
+            <div class="footer-box">
+                <h2>{{ i18n.t('socialMedia') }}</h2>
+                <p>
+                    Facebook – &#64;Barbershop<br />
+                    Instagram – &#64;Barbershop<br />
+                    {{ i18n.t('phone') }}
+                </p>
+            </div>
+            <div class="footer-box">
+                <h2>{{ i18n.t('location') }}</h2>
+                <p>
+                    {{ i18n.t('plovdivCenter') }}<br />
+                    {{ i18n.t('addressLine') }}<br />
+                    {{ i18n.t('cityCountry') }}
+                </p>
+            </div>
+        </footer>
     </div>
 </div>

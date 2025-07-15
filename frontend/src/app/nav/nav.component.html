@@ -1,12 +1,16 @@
 <nav class="navbar">
+    <div class="btn-wrapper">
+        <button class="lang-btn"  (click)="changeLang('en')" >EN</button>
+        <button class="lang-btn" (click)="changeLang('bg')">BG</button>
+    </div>
     <div class="logo">
         <a routerLink="/"><img class="logo" src="logo.png" alt="logo"/></a>
     </div>
 
     <!-- Desktop Navigation -->
     <ul class="nav-links">
-        <li><a routerLink="/" routerLinkActive="active">Home</a></li>
-        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+        <li><a routerLink="/">{{ i18n.t('home') }}</a></li>
+        <li><a routerLink="/about">{{ i18n.t('about') }}</a></li>
     </ul>
 
     <!-- Mobile Menu Button -->
@@ -16,7 +20,7 @@
 
     <!-- Mobile Dropdown -->
     <ul class="mobile-menu" [ngClass]="{ 'open': isMenuOpen }">
-        <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">Home</a></li>
-        <li><a routerLink="/about" routerLinkActive="active" (click)="toggleMenu()">About</a></li>
+        <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('home') }}</a></li>
+        <li><a routerLink="/about" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('about') }}</a></li>
     </ul>
 </nav>

@@ -1,6 +1,6 @@
 .calendar-container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 40px 6rem;
     padding: 20px;
     background: #1a1a1a;
     color: #f8f8f8;
@@ -259,6 +259,7 @@ button:hover {
     color: #ff4d4d;
 }
 .slots-panel {
+    max-width: 400px;
     flex: 1 1 400px;
     background: #1a1a1a;
     color: #fff;

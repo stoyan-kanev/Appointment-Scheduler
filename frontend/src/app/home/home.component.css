@@ -50,7 +50,7 @@
     display: flex;
     gap: 2rem;
 }
-.book-btn{
+.book-btn {
     border: 1px solid #000000;
     padding: 0.6rem;
     text-align: center;
@@ -59,6 +59,26 @@
     border-radius: 1.5rem;
     background-color: #73c62e;
     font-size: 2rem;
+    color: #000;
+
+    /* 3D Effect */
+    box-shadow: 0 8px 0 #4d8f1e, 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-in-out;
+    transform: perspective(500px);
+    cursor: pointer;
+    position: relative;
+}
+
+.book-btn:hover {
+    background-color: #000000;
+    color:#73c62e;
+    box-shadow: 0 2px 0 #494949, 0 2px 6px rgba(34, 32, 32, 0.2);
+    transform: translateY(-2px);
+}
+
+.book-btn:active {
+    box-shadow: 0 2px 0 #494949, 0 2px 6px rgba(34, 32, 32, 0.2);
+    transform: translateY(4px);
 }
 
 
@@ -106,7 +126,7 @@
 .carousel-item img {
     height: 180px;
     max-height: 40vh;
-    width: auto;
+    width: 200px;
     border-radius: 0.5rem;
 }
 .carousel-track {

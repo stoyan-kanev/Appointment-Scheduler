@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     background: #222;
-    padding: 15px 30px;
+    padding: 0 30px;
     color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -46,6 +46,10 @@
     display: none;
     font-size: 24px;
     cursor: pointer;
+}
+.logo{
+    width: 100px;
+    height: 100px;
 }
 
 /* Mobile Navigation */

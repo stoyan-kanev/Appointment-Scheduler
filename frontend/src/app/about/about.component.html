@@ -1,36 +1,40 @@
-<div class="about-container">
-    <h1>💈 About Elite Barber Demo</h1>
-    <p>
-        Welcome to <strong>Elite Barber Demo</strong>, the ultimate <strong>barbershop scheduling app</strong>
-        designed to showcase a seamless and efficient way to book your next haircut.
-    </p>
+<section class="about-section">
+    <img class="background-image" src="/bg.jpg" alt="background image" />
 
-    <p>
-        Whether you're looking for a classic cut, a modern fade, or a beard trim, our demo platform demonstrates
-        how <strong>easy and intuitive</strong> appointment scheduling can be.
-    </p>
+    <div class="about-container">
+        <div class="section-header">
+            <h1>{{ i18n.t('aboutTitle') }}</h1>
+        </div>
 
-    <h2>🗓 Features</h2>
-    <ul>
-        <li>✅ Select a preferred date</li>
-        <li>✅ View available time slots</li>
-        <li>✅ Instantly book an appointment</li>
-    </ul>
+        <p class="intro">
+            {{ i18n.t('aboutIntro') }}
+        </p>
 
-    <p>
-        Our demo application is built with <strong>Django & Angular</strong>, ensuring a fast, responsive, and
-        user-friendly experience. Try it out and see how <strong>effortless</strong> booking a barber appointment can be!
-    </p>
 
-    <h2>📍 Contact Us</h2>
-    <p><strong>Address:</strong> 123 Demo Street, Sofia, Bulgaria</p>
-    <p><strong>Phone:</strong> +359 888 123 456</p>
-    <p><strong>Email:</strong> support&#64;elitebarberdemo.com</p>
-    <p><strong>Website:</strong> <a href="https://www.elitebarberdemo.com" target="_blank">www.elitebarberdemo.com</a></p>
+        <div class="features">
+            <h2><span>🗓</span> {{ i18n.t('keyFeatures') }}</h2>
+            <ul>
+                <li><span>✔</span> {{ i18n.t('featureDate') }}</li>
+                <li><span>✔</span> {{ i18n.t('featureSlots') }}</li>
+                <li><span>✔</span> {{ i18n.t('featureInstant') }}</li>
+            </ul>
+            <p>{{ i18n.t('poweredBy') }}</p>
+        </div>
 
-    <h3>📲 Follow Us</h3>
-    <p>
-        📷 <strong>Instagram:</strong> <a href="https://instagram.com/elitebarberdemo" target="_blank">&#64;elitebarberdemo</a><br>
-        📘 <strong>Facebook:</strong> <a href="https://facebook.com/elitebarberdemo" target="_blank">/elitebarberdemo</a>
-    </p>
-</div>
+        <div class="contact">
+            <h2><span>📍</span> {{ i18n.t('contactUs') }}</h2>
+            <p><strong>{{ i18n.t('address') }}</strong>: 123 Demo Street, Sofia, Bulgaria</p>
+            <p><strong>{{ i18n.t('phoneLabel') }}</strong>: +359 888 123 456</p>
+            <p><strong>{{ i18n.t('email') }}</strong>: support&#64;elitebarberdemo.com</p>
+            <p><strong>{{ i18n.t('website') }}</strong>: <a href="https://elitebarberdemo.com" target="_blank">elitebarberdemo.com</a></p>
+        </div>
+
+        <div class="social">
+            <h3>📲 {{ i18n.t('followUs') }}</h3>
+            <div class="social-links">
+                <a href="https://instagram.com/elitebarberdemo" target="_blank">📷 Instagram</a>
+                <a href="https://facebook.com/elitebarberdemo" target="_blank">📘 Facebook</a>
+            </div>
+        </div>
+    </div>
+</section>

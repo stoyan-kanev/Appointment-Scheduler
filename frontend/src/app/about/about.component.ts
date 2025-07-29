@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {I18nService} from '../services/i18n.service';
 
 @Component({
   selector: 'app-about',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
-
+    constructor(public i18n: I18nService) {}
 }

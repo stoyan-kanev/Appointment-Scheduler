@@ -15,12 +15,22 @@ import {I18nService} from '../services/i18n.service';
 })
 export class HomeComponent {
     images = [
-        '/1.jpg',
-        '/2.jpg',
-        '/3.jpg',
-        '/1.jpg',
-        '/2.jpg',
-        '/3.jpg',
+        '/barber1.jpg',
+        '/barber2.jpg',
+        '/barber3.jpg',
+        '/barber4.jpg',
+        '/barber5.jpg',
+        '/barber6.jpg',
+        '/barber7.jpg',
+        '/barber8.jpg',
+        '/barber1.jpg',
+        '/barber2.jpg',
+        '/barber3.jpg',
+        '/barber4.jpg',
+        '/barber5.jpg',
+        '/barber6.jpg',
+        '/barber7.jpg',
+        '/barber8.jpg',
     ];
     currentSlide = 0;
     intervalId: any;

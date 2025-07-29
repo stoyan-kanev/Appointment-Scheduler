@@ -11,6 +11,8 @@
     <ul class="nav-links">
         <li><a routerLink="/">{{ i18n.t('home') }}</a></li>
         <li><a routerLink="/about">{{ i18n.t('about') }}</a></li>
+        <li><a routerLink="/services">{{ i18n.t('services') }}</a></li>
+        <li><a routerLink="/team">{{ i18n.t('team') }}</a></li>
     </ul>
 
     <!-- Mobile Menu Button -->
@@ -22,5 +24,7 @@
     <ul class="mobile-menu" [ngClass]="{ 'open': isMenuOpen }">
         <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('home') }}</a></li>
         <li><a routerLink="/about" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('about') }}</a></li>
+        <li><a routerLink="/services" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('services') }}</a></li>
+        <li><a routerLink="/team" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('team') }}</a></li>
     </ul>
 </nav>

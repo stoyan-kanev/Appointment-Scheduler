@@ -1,63 +1,41 @@
-<img class="background-image" src="/bg.jpg" alt="background image" />
-
-<div class="calendar-layout">
-    <!-- Календар -->
+<section class="booking-wrapper">
     <div class="calendar-container">
-        <h2>Calendar</h2>
-
-        <div class="month-navigation">
-            <button mat-button (click)="changeMonth(-1)" [disabled]="!canGoToPreviousMonth()" [class.disabled]="!canGoToPreviousMonth()">
+        <div class="calendar-header">
+            <button mat-icon-button (click)="changeMonth(-1)">
                 <mat-icon>chevron_left</mat-icon>
             </button>
-            <span>{{ currentDate | date: 'MMMM yyyy' }}</span>
-            <button mat-button (click)="changeMonth(1)" [disabled]="!canGoToNextMonth()" [class.disabled]="!canGoToNextMonth()">
+            <h2>{{ currentDate | date: 'MMMM yyyy' }}</h2>
+            <button mat-icon-button (click)="changeMonth(1)">
                 <mat-icon>chevron_right</mat-icon>
             </button>
         </div>
 
-        <div class="calendar-grid weekdays">
-            <div *ngFor="let dayName of dayNames" class="weekday">{{ dayName }}</div>
-        </div>
-
         <div class="calendar-grid">
+            <div class="day-label" *ngFor="let day of dayNames">{{ day }}</div>
             <div
+                class="day-cell"
                 *ngFor="let day of daysInMonth"
-                class="day"
-                [ngClass]="{
-    'empty': !day,
-    'disabled-day': isPastDay(day),
-    'selected': selectedDay === (day?.date | date: 'yyyy-MM-dd')
-  }"
-                (click)="!isPastDay(day) && selectDay(day)">
-                <span *ngIf="day">{{ day.date.getDate() }}</span>
+                [class.today]="isToday(day?.date)"
+                [class.selected]="selectedDay === (day?.date | date:'yyyy-MM-dd')"
+                (click)="selectDay(day)"
+            >
+                {{ day?.date?.getDate() }}
             </div>
-
-        </div>
-    </div>
-
-    <!-- Панел с часове -->
-    <div *ngIf="selectedDay && showSlots" class="slots-panel slide-in-right">
-        <div class="panel-header">
-            <h3>Available hours on {{ selectedDay | date: 'MMMM d, y' }}</h3>
-            <button mat-icon-button (click)="hideSlots()" class="close-button">
-                <mat-icon>close</mat-icon>
-            </button>
         </div>
 
-        <div class="slots-container">
-            <div *ngFor="let slot of getSelectedDaySlots()" class="slot">
-                <span class="time">{{ slot.time }}</span>
+        <div class="time-slots" *ngIf="showSlots && selectedDay">
+            <h3>{{ 'Available Times'}}</h3>
+            <div class="time-grid">
                 <button
-                    [ngClass]="{ 'reserved': isSlotReserved(slot.time), 'available': !isSlotReserved(slot.time) }"
-                    (click)="openReservationPopup(slot.time)"
-                    [disabled]="isSlotReserved(slot.time)">
-                    {{ isSlotReserved(slot.time) ? 'Reserved' : 'Reserve' }}
-                </button>
-
-                <button *ngIf="isBarber" mat-button (click)="viewAppointmentDetails(slot.time)">
-                    Details
+                    *ngFor="let time of getSelectedDaySlots()"
+                    class="time-btn"
+                    [class.selected-time]="false"
+                    [disabled]="isSlotReserved(time)"
+                    (click)="openReservationPopup(time)"
+                >
+                    {{ time }}
                 </button>
             </div>
         </div>
     </div>
-</div>
+</section>

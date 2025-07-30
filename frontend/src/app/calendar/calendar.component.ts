@@ -1,23 +1,22 @@
-import {Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {ReservationPopupComponent} from './reservation-popup/reservation-popup.component';
-import {AppointmentService} from './appointment.service';
-import {AuthService} from '../auth/services/auth.service';
-import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-dialogue.component';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+import { AppointmentService } from './appointment.service';
+import { AuthService } from '../auth/services/auth.service';
+import { ReservationPopupComponent } from './reservation-popup/reservation-popup.component';
+import { AppointmentDialogueComponent } from './appointment-dialogue/appointment-dialogue.component';
 
 @Component({
     selector: 'app-calendar',
     standalone: true,
     imports: [
         CommonModule,
-        MatExpansionModule,
+        MatDialogModule,
         MatButtonModule,
         MatIconModule,
-        MatDialogModule,
     ],
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css'
@@ -25,18 +24,31 @@ import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-d
 export class CalendarComponent {
     currentDate: Date = new Date();
     selectedDay: string | null = null;
-    daysInMonth: any[] = [];
     dayNames: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    daysInMonth: any[] = [];
     reservedSlots: string[] = [];
-    isBarber = false;
     showSlots = true;
+    isBarber = false;
 
-
-    constructor(private dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
-        this.authService.getAuthStatus().subscribe(isAuthenticated => {
-            this.isBarber = isAuthenticated;
+    constructor(
+        private dialog: MatDialog,
+        private appointmentService: AppointmentService,
+        private authService: AuthService
+    ) {
+        this.authService.getAuthStatus().subscribe(status => {
+            this.isBarber = status;
         });
         this.generateMonth();
+    }
+
+    changeMonth(offset: number) {
+        this.currentDate = new Date(
+            this.currentDate.getFullYear(),
+            this.currentDate.getMonth() + offset,
+            1
+        );
+        this.generateMonth();
+        this.selectedDay = null;
     }
 
     generateMonth() {
@@ -47,8 +59,7 @@ export class CalendarComponent {
 
         this.daysInMonth = [];
 
-        let adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
-
+        const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
         for (let i = 0; i < adjustedFirstDay; i++) {
             this.daysInMonth.push(null);
         }
@@ -56,103 +67,75 @@ export class CalendarComponent {
         for (let day = 1; day <= daysInMonth; day++) {
             this.daysInMonth.push({
                 date: new Date(year, month, day),
-                slots: [
-                    {time: '15:00'},
-                    {time: '15:30'},
-                    {time: '16:00'},
-                    {time: '16:30'},
-                    {time: '17:00'}
-                ]
+                slots: ['15:00', '15:30', '16:00', '16:30', '17:00']
             });
         }
     }
 
-    canGoToPreviousMonth(): boolean {
-        const now = new Date();
+    isToday(date: Date | null | undefined): boolean {
+        if (!date) return false;
+        const today = new Date();
         return (
-            this.currentDate.getFullYear() > now.getFullYear() ||
-            (this.currentDate.getFullYear() === now.getFullYear() &&
-                this.currentDate.getMonth() > now.getMonth())
+            date.getFullYear() === today.getFullYear() &&
+            date.getMonth() === today.getMonth() &&
+            date.getDate() === today.getDate()
         );
     }
 
-    canGoToNextMonth(): boolean {
-        const now = new Date();
-        const maxDate = new Date(now.getFullYear(), now.getMonth() + 12, 1);
-        return this.currentDate < maxDate;
+    selectDay(day: any) {
+        if (!day || !day.date) return;
+
+        const selected = new Date(day.date);
+        const today = new Date();
+        const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        if (selected < normalizedToday) {
+            console.warn('❌ Cannot select a past date.');
+            return;
+        }
+
+        const year = selected.getFullYear();
+        const month = String(selected.getMonth() + 1).padStart(2, '0');
+        const date = String(selected.getDate()).padStart(2, '0');
+        this.selectedDay = `${year}-${month}-${date}`;
+        this.showSlots = true;
+
+        this.appointmentService.getReservedSlots(this.selectedDay).subscribe({
+            next: (res) => {
+                this.reservedSlots = res.reserved_slots;
+            },
+            error: (err) => {
+                console.error('Error fetching reserved slots:', err);
+            }
+        });
     }
 
-    changeMonth(offset: number) {
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + offset, 1);
-        this.generateMonth();
-        this.selectedDay = null;
-    }
-
-    getSelectedDaySlots() {
+    getSelectedDaySlots(): string[] {
         if (!this.selectedDay) return [];
 
         const selectedDate = new Date(this.selectedDay);
+        const isToday = this.isToday(selectedDate);
         const now = new Date();
 
-        const isToday = selectedDate.toDateString() === now.toDateString();
-
-        const day = this.daysInMonth.find(d => {
-            if (!d) return false;
-            const localDate = new Date(d.date.getFullYear(), d.date.getMonth(), d.date.getDate());
-            return localDate.toDateString() === selectedDate.toDateString();
+        const selectedDayObj = this.daysInMonth.find(day => {
+            return day?.date &&
+                day.date.getFullYear() === selectedDate.getFullYear() &&
+                day.date.getMonth() === selectedDate.getMonth() &&
+                day.date.getDate() === selectedDate.getDate();
         });
 
-        if (!day) return [];
+        if (!selectedDayObj) return [];
 
         if (isToday) {
-            return day.slots.filter((slot: { time: string }) => {
-                const [hours, minutes] = slot.time.split(':').map(Number);
+            return selectedDayObj.slots.filter((slot: string) => {
+                const [h, m] = slot.split(':').map(Number);
                 const slotTime = new Date(selectedDate);
-                slotTime.setHours(hours, minutes, 0, 0);
+                slotTime.setHours(h, m, 0, 0);
                 return slotTime > now;
             });
         }
 
-        return day.slots;
-    }
-
-    hideSlots(): void {
-        this.showSlots = false;
-    }
-
-    selectDay(day: any) {
-        if (day) {
-            const today = new Date();
-            const selectedDate = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-            this.showSlots = true
-            if (selectedDate < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
-                console.warn("❌ Cannot select a past date.");
-                return;
-            }
-
-            const year = day.date.getFullYear();
-            const month = String(day.date.getMonth() + 1).padStart(2, '0');
-            const date = String(day.date.getDate()).padStart(2, '0');
-
-            this.selectedDay = `${year}-${month}-${date}`;
-
-            this.appointmentService.getReservedSlots(this.selectedDay)
-                .subscribe(response => {
-                    this.reservedSlots = response.reserved_slots;
-                }, error => {
-                    console.error("Error fetching reserved slots:", error);
-                });
-        }
-    }
-
-    isPastDay(day: any): boolean {
-        if (!day || !day.date) return true;
-
-        const today = new Date();
-        const target = new Date(day.date.getFullYear(), day.date.getMonth(), day.date.getDate());
-        const now = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-        return target < now;
+        return selectedDayObj.slots;
     }
 
     isSlotReserved(time: string): boolean {
@@ -160,55 +143,41 @@ export class CalendarComponent {
     }
 
     openReservationPopup(time: string) {
-        if (!this.selectedDay) {
-            console.error("No date selected!");
-            return;
-        }
+        if (!this.selectedDay) return;
 
-        const [hours, minutes] = time.split(':').map(Number);
-        const selectedDateTime = new Date(this.selectedDay);
-        selectedDateTime.setHours(hours, minutes, 0, 0);
+        const [h, m] = time.split(':').map(Number);
+        const datetime = new Date(this.selectedDay);
+        datetime.setHours(h, m, 0, 0);
 
-        const now = new Date();
-
-        if (selectedDateTime < now) {
-            console.warn("⛔ Cannot reserve a time slot in the past.");
+        if (datetime < new Date()) {
+            console.warn('⛔ Cannot book time in the past.');
             return;
         }
 
         const dialogRef = this.dialog.open(ReservationPopupComponent, {
-            width: '800px',
-            data: {date: this.selectedDay, time}
+            width: '700px',
+            data: { date: this.selectedDay, time }
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
+        dialogRef.afterClosed().subscribe(result => {
             if (result === 'reserved') {
-                console.log("🔁 Refreshing reserved slots after reservation...");
-                this.appointmentService.getReservedSlots(this.selectedDay)
-                    .subscribe(response => {
-                        this.reservedSlots = response.reserved_slots;
-                    }, error => {
-                        console.error("Error refreshing reserved slots:", error);
-                    });
+                this.appointmentService.getReservedSlots(this.selectedDay!).subscribe({
+                    next: (res) => this.reservedSlots = res.reserved_slots,
+                    error: (err) => console.error('Refresh error:', err)
+                });
             }
         });
     }
 
-
     viewAppointmentDetails(time: string) {
         this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
             next: (appointment) => {
-                // console.log("✅ Appointment Details Fetched:", appointment);
                 this.dialog.open(AppointmentDialogueComponent, {
                     width: '400px',
                     data: appointment
                 });
             },
-            error: (err) => {
-                console.error('❌ Failed to fetch appointment details:', err);
-            }
+            error: (err) => console.error('❌ Failed to fetch appointment details:', err)
         });
     }
-
-
 }

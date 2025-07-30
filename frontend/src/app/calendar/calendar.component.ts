@@ -6,9 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppointmentService } from './appointment.service';
 import { AuthService } from '../auth/services/auth.service';
-import { ReservationPopupComponent } from './reservation-popup/reservation-popup.component';
 import { AppointmentDialogueComponent } from './appointment-dialogue/appointment-dialogue.component';
-
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatFormField, MatInput} from '@angular/material/input';
 @Component({
     selector: 'app-calendar',
     standalone: true,
@@ -17,11 +17,17 @@ import { AppointmentDialogueComponent } from './appointment-dialogue/appointment
         MatDialogModule,
         MatButtonModule,
         MatIconModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatFormField,
+        MatInput,
+        MatFormField,
     ],
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
+    reservationForm!: FormGroup;
     currentDate: Date = new Date();
     selectedDay: string | null = null;
     dayNames: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -29,18 +35,29 @@ export class CalendarComponent {
     reservedSlots: string[] = [];
     showSlots = true;
     isBarber = false;
-
+    selectedSlot: string | null = null;
+    showForm = false;
+    error = ''
     constructor(
         private dialog: MatDialog,
         private appointmentService: AppointmentService,
-        private authService: AuthService
+        private authService: AuthService,
+        private fb: FormBuilder
     ) {
         this.authService.getAuthStatus().subscribe(status => {
             this.isBarber = status;
         });
         this.generateMonth();
-    }
 
+    }
+    ngOnInit() {
+        this.reservationForm = this.fb.group({
+            first_name: ['', Validators.required],
+            last_name: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            phone: ['', [Validators.required, Validators.pattern('[0-9]{10,15}')]]
+        });
+    }
     changeMonth(offset: number) {
         this.currentDate = new Date(
             this.currentDate.getFullYear(),
@@ -88,9 +105,10 @@ export class CalendarComponent {
         const selected = new Date(day.date);
         const today = new Date();
         const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        this.error = ''
 
         if (selected < normalizedToday) {
-            console.warn('❌ Cannot select a past date.');
+            this.error = 'Cannot select a past date.'
             return;
         }
 
@@ -142,33 +160,59 @@ export class CalendarComponent {
         return this.reservedSlots.includes(time);
     }
 
+
     openReservationPopup(time: string) {
         if (!this.selectedDay) return;
 
         const [h, m] = time.split(':').map(Number);
         const datetime = new Date(this.selectedDay);
         datetime.setHours(h, m, 0, 0);
-
+        this.error = ''
         if (datetime < new Date()) {
-            console.warn('⛔ Cannot book time in the past.');
+            this.error = 'Cannot book time in the past.'
             return;
         }
 
-        const dialogRef = this.dialog.open(ReservationPopupComponent, {
-            width: '700px',
-            data: { date: this.selectedDay, time }
-        });
+        this.selectedSlot = time;
+        this.showForm = true;
+        this.reservationForm.reset();
+    }
+    submitForm() {
+        if (this.reservationForm.invalid || !this.selectedDay || !this.selectedSlot) return;
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result === 'reserved') {
+        const date_time = `${this.selectedDay} ${this.selectedSlot.split(' - ')[0]}`;
+        const payload = {
+            ...this.reservationForm.value,
+            date_time
+        };
+
+        this.appointmentService.createAppointment(payload).subscribe({
+            next: () => {
+                this.showForm = false;
+                this.selectedSlot = null;
                 this.appointmentService.getReservedSlots(this.selectedDay!).subscribe({
                     next: (res) => this.reservedSlots = res.reserved_slots,
-                    error: (err) => console.error('Refresh error:', err)
+                    error: (err) => console.error(err)
                 });
+            },
+            error: (err) => {
+                console.error('❌ Error:', err);
             }
         });
     }
-
+    closeInlineForm() {
+        this.showForm = false;
+        this.selectedSlot = null;
+    }
+    onReservationSuccess() {
+        this.closeInlineForm();
+        if (this.selectedDay) {
+            this.appointmentService.getReservedSlots(this.selectedDay).subscribe({
+                next: (res) => this.reservedSlots = res.reserved_slots,
+                error: (err) => console.error('Error updating slots:', err)
+            });
+        }
+    }
     viewAppointmentDetails(time: string) {
         this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
             next: (appointment) => {

@@ -1,28 +1,36 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AppointmentService} from '../appointment.service';
-import {MatFormField} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AppointmentService } from '../appointment.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'app-reservation-popup',
+    selector: 'app-reservation-form',
     standalone: true,
-    templateUrl: './reservation-popup.component.html',
-    styleUrl: './reservation-popup.component.css',
-    imports: [ReactiveFormsModule, MatFormField, MatDialogTitle, MatInput, MatButton, MatIconButton]
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
+    ],
+    templateUrl: './reservation-form.component.html',
+    styleUrls: ['./reservation-form.component.css']
 })
-export class ReservationPopupComponent {
-    reservationForm: FormGroup;
+export class ReservationFormComponent implements OnInit {
+    @Input() date!: string;
+    @Input() time!: string;
+    @Output() formClosed = new EventEmitter<void>();
+    @Output() formSuccess = new EventEmitter<void>();
+
+    reservationForm!: FormGroup;
 
     constructor(
         private fb: FormBuilder,
-        private appointmentService: AppointmentService,
-        public dialogRef: MatDialogRef<ReservationPopupComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { date: string; time: string }
-    ) {
+        private appointmentService: AppointmentService
+    ) {}
+
+    ngOnInit() {
         this.reservationForm = this.fb.group({
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
@@ -30,56 +38,24 @@ export class ReservationPopupComponent {
             phone: ['', [Validators.required, Validators.pattern('[0-9]{10,15}')]]
         });
     }
+
     submitForm() {
-        if (this.reservationForm.valid) {
+        if (this.reservationForm.invalid) return;
 
-            if (!this.data.date || !this.data.time) {
-                console.error("Missing Date or Time!");
-                return;
-            }
+        const date_time = `${this.date} ${this.time.split(' - ')[0]}`;
 
-            const formattedDateTime = this.formatDateTime(this.data.date, this.data.time);
+        const payload = {
+            ...this.reservationForm.value,
+            date_time
+        };
 
-
-            if (!formattedDateTime) {
-                console.error("Formatted DateTime is Empty!");
-                return;
-            }
-
-            const formData = {
-                ...this.reservationForm.value,
-                date_time: formattedDateTime
-            };
-
-
-            this.appointmentService.createAppointment(formData).subscribe({
-                next: (response) => {
-                    console.log('Appointment Created:', response);
-                    this.dialogRef.close('reserved');
-                },
-                error: (error) => {
-                    console.error('Error creating appointment:', error);
-                }
-            });
-        }
+        this.appointmentService.createAppointment(payload).subscribe({
+            next: () => this.formSuccess.emit(),
+            error: (err) => console.error('Error:', err)
+        });
     }
 
-    closeDialog() {
-        this.dialogRef.close();
+    cancel() {
+        this.formClosed.emit();
     }
-    formatDateTime(date: string, time: string): string {
-        if (!date || !time) {
-            console.error("Invalid date or time:", date, time);
-            return "";
-        }
-
-        const formattedDate = date;
-
-        const formattedTime = time.split(" - ")[0];
-        return `${formattedDate} ${formattedTime}`;
-    }
-
-
-
-
 }

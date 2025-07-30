@@ -1,5 +1,10 @@
 <section class="booking-wrapper">
     <div class="calendar-container">
+        <p class="error">
+            {{error}}
+
+        </p>
+
         <div class="calendar-header">
             <button mat-icon-button (click)="changeMonth(-1)">
                 <mat-icon>chevron_left</mat-icon>
@@ -24,12 +29,11 @@
         </div>
 
         <div class="time-slots" *ngIf="showSlots && selectedDay">
-            <h3>{{ 'Available Times'}}</h3>
+            <h3>Available Times</h3>
             <div class="time-grid">
                 <button
                     *ngFor="let time of getSelectedDaySlots()"
                     class="time-btn"
-                    [class.selected-time]="false"
                     [disabled]="isSlotReserved(time)"
                     (click)="openReservationPopup(time)"
                 >
@@ -38,4 +42,36 @@
             </div>
         </div>
     </div>
+    <div class="inline-form" *ngIf="showForm">
+        <h2 class="title">RESERVE NOW</h2>
+        <div class="selected-slot">
+            📅 <strong>{{ selectedDay }} от {{ selectedSlot }}</strong>
+        </div>
+
+        <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+            <mat-form-field appearance="fill">
+                <input matInput formControlName="first_name" placeholder="Име..." />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <input matInput formControlName="last_name" placeholder="Фамилия..." />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <input matInput formControlName="email" placeholder="Имейл адрес..." />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <input matInput formControlName="phone" placeholder="Телефон..." />
+            </mat-form-field>
+
+            <div class="form-actions">
+                <button mat-button color="warn" type="button" (click)="showForm = false">❌ Отказ</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
+                    ✅ Потвърди
+                </button>
+            </div>
+        </form>
+    </div>
 </section>
+

@@ -1,135 +1,29 @@
-.mat-dialog-container {
-    background: #1e1e1e;
-    color: #ffffff;
-    padding: 40px 32px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    font-family: 'Poppins', sans-serif;
-    max-width: 480px;
+.form-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-
+    animation: slideIn 0.3s ease-out;
 }
 
-.popup-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #c6b22e;
-    text-align: center;
-    margin: 0;
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-
-/* Слот */
 .selected-slot {
-    font-size: 1rem;
-    background: #2d2d2d;
-    padding: 10px 14px;
-    border-radius: 10px;
-    margin: 0px 0 20px;
-    color:  #c6b22e;
-    font-weight: 500;
-    text-align: center;
-}
-
-/* Формата */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    padding: 30px;
-}
-
-/* Материално поле */
-mat-form-field {
-    width: 100%;
-}
-
-mat-form-field.mat-form-field {
-    background-color: #292929;
-    border-radius: 10px;
-    padding: 4px 12px;
-}
-
-/* Премахни underline и outline */
-.mat-form-field-appearance-fill .mat-form-field-flex {
-    background-color: transparent !important;
-    border-bottom: none;
-}
-
-.mat-form-field-appearance-fill .mat-form-field-underline,
-.mat-form-field-appearance-fill .mat-form-field-outline {
-    display: none;
-}
-
-/* Input вътре в mat-form-field */
-.mat-input-element {
-    color: white;
-    font-size: 1rem;
-    padding: 12px 0;
-}
-
-/* Placeholder стил */
-::placeholder {
-    color: #bcbcbc;
-    opacity: 1;
-}
-
-form {
-    overflow: hidden !important;
-    max-height: unset !important;
-}
-
-/* Бутон */
-.submit-btn {
-    background:  #c6b22e;
-    color: #121212;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-    width: 100%;
-    border: none;
-}
-
-.submit-btn:hover {
-    background:  #c6b22e;
-}
-
-.submit-btn:disabled {
-    background: #555;
-    color: #aaa;
-    cursor: not-allowed;
-}
-
-.dialog-header {
-    position: relative;
-    margin-bottom: 25px;
-}
-
-.close-btn {
-    position: absolute;
-    top: 25%;
-    right: 0;
-    color: black;
-    background: transparent;
-    border: none;
-    font-size: 1.6rem;
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-    padding: 0;
-    margin: 0 10px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-btn:hover {
-    color:  #c6b22e;
+    background-color: #f3f3f3;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #c6b22e;
 }

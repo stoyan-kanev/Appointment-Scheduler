@@ -1,33 +1,31 @@
-<div class="dialog-header">
-    <h2 mat-dialog-title class="popup-title">RESERVE NOW</h2>
-    <button mat-icon-button class="close-btn" (click)="closeDialog()">
-        ✕
-    </button>
-</div>
-
-
-<form class="form-group"  [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+<div class="form-container">
+    <h2 class="title">RESERVE NOW</h2>
     <div class="selected-slot">
-        📅 <strong>{{ data.date }} от {{ data.time }}</strong>
+        📅 <strong>{{ date }} от {{ time }}</strong>
     </div>
 
-    <mat-form-field appearance="fill">
-        <input matInput formControlName="first_name" placeholder="Име..." required />
-    </mat-form-field>
+    <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+        <mat-form-field appearance="fill">
+            <input matInput formControlName="first_name" placeholder="Име..." />
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <input matInput formControlName="last_name" placeholder="Фамилия..." required />
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+            <input matInput formControlName="last_name" placeholder="Фамилия..." />
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <input matInput formControlName="email" type="email" placeholder="Имейл адрес..." required />
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+            <input matInput formControlName="email" placeholder="Имейл адрес..." />
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-        <input matInput formControlName="phone" type="number" placeholder="Телефон..." required />
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+            <input matInput formControlName="phone" placeholder="Телефон..." />
+        </mat-form-field>
 
-    <button mat-button type="submit" class="submit-btn" [disabled]="reservationForm.invalid">
-        ➡ Continue
-    </button>
-</form>
+        <div class="form-actions">
+            <button mat-button color="warn" type="button" (click)="cancel()">❌ Отказ</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
+                ✅ Потвърди
+            </button>
+        </div>
+    </form>
+</div>

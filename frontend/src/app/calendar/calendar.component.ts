@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
-import { AppointmentService } from './appointment.service';
-import { AuthService } from '../auth/services/auth.service';
-import { AppointmentDialogueComponent } from './appointment-dialogue/appointment-dialogue.component';
+import {AppointmentService} from './appointment.service';
+import {AuthService} from '../auth/services/auth.service';
+import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-dialogue.component';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput} from '@angular/material/input';
+
 @Component({
     selector: 'app-calendar',
     standalone: true,
@@ -38,6 +39,7 @@ export class CalendarComponent {
     selectedSlot: string | null = null;
     showForm = false;
     error = ''
+    selectedBarber: string | null = null;
     constructor(
         private dialog: MatDialog,
         private appointmentService: AppointmentService,
@@ -50,6 +52,7 @@ export class CalendarComponent {
         this.generateMonth();
 
     }
+
     ngOnInit() {
         this.reservationForm = this.fb.group({
             first_name: ['', Validators.required],
@@ -58,6 +61,7 @@ export class CalendarComponent {
             phone: ['', [Validators.required, Validators.pattern('[0-9]{10,15}')]]
         });
     }
+
     changeMonth(offset: number) {
         this.currentDate = new Date(
             this.currentDate.getFullYear(),
@@ -67,7 +71,13 @@ export class CalendarComponent {
         this.generateMonth();
         this.selectedDay = null;
     }
-
+    selectBarber(barberName: string) {
+        this.selectedBarber = barberName;
+        this.selectedDay = null;
+        this.reservedSlots = [];
+        this.showSlots = false;
+        console.log('Selected barber:', barberName);
+    }
     generateMonth() {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
@@ -84,7 +94,7 @@ export class CalendarComponent {
         for (let day = 1; day <= daysInMonth; day++) {
             this.daysInMonth.push({
                 date: new Date(year, month, day),
-                slots: ['15:00', '15:30', '16:00', '16:30', '17:00']
+                slots: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00']
             });
         }
     }
@@ -100,15 +110,20 @@ export class CalendarComponent {
     }
 
     selectDay(day: any) {
+        if (!this.selectedBarber) {
+            this.error = 'Моля, изберете барбър първо.';
+            return;
+        }
+
         if (!day || !day.date) return;
 
         const selected = new Date(day.date);
         const today = new Date();
         const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        this.error = ''
+        this.error = '';
 
         if (selected < normalizedToday) {
-            this.error = 'Cannot select a past date.'
+            this.error = 'Не можете да избирате минали дати.';
             return;
         }
 
@@ -118,7 +133,7 @@ export class CalendarComponent {
         this.selectedDay = `${year}-${month}-${date}`;
         this.showSlots = true;
 
-        this.appointmentService.getReservedSlots(this.selectedDay).subscribe({
+        this.appointmentService.getReservedSlots(this.selectedDay,this.selectedBarber).subscribe({
             next: (res) => {
                 this.reservedSlots = res.reserved_slots;
             },
@@ -177,20 +192,22 @@ export class CalendarComponent {
         this.showForm = true;
         this.reservationForm.reset();
     }
+
     submitForm() {
         if (this.reservationForm.invalid || !this.selectedDay || !this.selectedSlot) return;
 
         const date_time = `${this.selectedDay} ${this.selectedSlot.split(' - ')[0]}`;
         const payload = {
             ...this.reservationForm.value,
-            date_time
+            date_time,
+            barber_name: this.selectedBarber
         };
 
         this.appointmentService.createAppointment(payload).subscribe({
             next: () => {
                 this.showForm = false;
                 this.selectedSlot = null;
-                this.appointmentService.getReservedSlots(this.selectedDay!).subscribe({
+                this.appointmentService.getReservedSlots(this.selectedDay!,this.selectedBarber).subscribe({
                     next: (res) => this.reservedSlots = res.reserved_slots,
                     error: (err) => console.error(err)
                 });
@@ -200,19 +217,22 @@ export class CalendarComponent {
             }
         });
     }
+
     closeInlineForm() {
         this.showForm = false;
         this.selectedSlot = null;
     }
+
     onReservationSuccess() {
         this.closeInlineForm();
         if (this.selectedDay) {
-            this.appointmentService.getReservedSlots(this.selectedDay).subscribe({
+            this.appointmentService.getReservedSlots(this.selectedDay,this.selectedBarber).subscribe({
                 next: (res) => this.reservedSlots = res.reserved_slots,
                 error: (err) => console.error('Error updating slots:', err)
             });
         }
     }
+
     viewAppointmentDetails(time: string) {
         this.appointmentService.getAppointmentDetails(this.selectedDay, time).subscribe({
             next: (appointment) => {

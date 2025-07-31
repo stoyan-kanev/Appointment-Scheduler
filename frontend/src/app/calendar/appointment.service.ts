@@ -19,7 +19,9 @@ export class AppointmentService {
         return this.http.post(this.apiUrl, data);
     }
 
-    getReservedSlots(date: string | null): Observable<any> {
-        return this.http.get(`${this.apiUrl}reserved/${date}/`);
+    getReservedSlots(date: string, barberName: string | null): Observable<any> {
+        return this.http.get<{ reserved_slots: string[] }>(
+            `${this.apiUrl}reserved-slots/?date=${date}&barber_name=${barberName}`
+        );
     }
 }

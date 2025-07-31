@@ -66,18 +66,29 @@ class GetSignalerAppointment(APIView):
 
 
 class GetReservedSlots(APIView):
+    def get(self, request):
+        date = request.GET.get('date')
+        barber_name = request.GET.get('barber_name')
 
-    def get(self, request, date):
+        if not date or not barber_name:
+            return Response({"error": "Missing date or barber_name"}, status=400)
+
         try:
             date_obj = datetime.strptime(date, "%Y-%m-%d").date()
 
-            reserved_appointments = Appointment.objects.filter(date_time__date=date_obj)
+            reserved_appointments = Appointment.objects.filter(
+                date_time__date=date_obj,
+                barber_name=barber_name
+            )
 
-            reserved_slots = [localtime(appt.date_time).strftime("%H:%M") for appt in reserved_appointments]
+            reserved_slots = [
+                localtime(appt.date_time).strftime("%H:%M")
+                for appt in reserved_appointments
+            ]
 
-            print(f"🔹 Corrected Reserved Slots for {date}: {reserved_slots}")
-
+            print(f"🔹 Reserved Slots for {barber_name} on {date}: {reserved_slots}")
             return Response({"reserved_slots": reserved_slots})
+
         except ValueError:
             return Response({"error": "Invalid date format. Expected YYYY-MM-DD"}, status=400)
 

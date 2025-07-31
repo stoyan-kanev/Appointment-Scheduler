@@ -1,77 +1,94 @@
 <section class="booking-wrapper">
-    <div class="calendar-container">
-        <p class="error">
-            {{error}}
+    <div class="barber-wrapper">
+        <button
+            (click)="selectBarber('Petur Petrov')"
+            [ngClass]="{ 'selected-barber': selectedBarber === 'Petur Petrov' }"
+        >
+            <img class="barber-img-calendar" src="/barber1.jpg" alt="">
+        </button>
 
-        </p>
-
-        <div class="calendar-header">
-            <button mat-icon-button (click)="changeMonth(-1)">
-                <mat-icon>chevron_left</mat-icon>
-            </button>
-            <h2>{{ currentDate | date: 'MMMM yyyy' }}</h2>
-            <button mat-icon-button (click)="changeMonth(1)">
-                <mat-icon>chevron_right</mat-icon>
-            </button>
-        </div>
-
-        <div class="calendar-grid">
-            <div class="day-label" *ngFor="let day of dayNames">{{ day }}</div>
-            <div
-                class="day-cell"
-                *ngFor="let day of daysInMonth"
-                [class.today]="isToday(day?.date)"
-                [class.selected]="selectedDay === (day?.date | date:'yyyy-MM-dd')"
-                (click)="selectDay(day)"
-            >
-                {{ day?.date?.getDate() }}
-            </div>
-        </div>
-
-        <div class="time-slots" *ngIf="showSlots && selectedDay">
-            <h3>Available Times</h3>
-            <div class="time-grid">
-                <button
-                    *ngFor="let time of getSelectedDaySlots()"
-                    class="time-btn"
-                    [disabled]="isSlotReserved(time)"
-                    (click)="openReservationPopup(time)"
-                >
-                    {{ time }}
-                </button>
-            </div>
-        </div>
+        <button
+            (click)="selectBarber('Angel Nikolov')"
+            [ngClass]="{ 'selected-barber': selectedBarber === 'Angel Nikolov' }"
+        >
+            <img class="barber-img-calendar" src="/barber2.jpg" alt="">
+        </button>
     </div>
-    <div class="inline-form" *ngIf="showForm">
-        <h2 class="title">RESERVE NOW</h2>
-        <div class="selected-slot">
-            📅 <strong>{{ selectedDay }} от {{ selectedSlot }}</strong>
-        </div>
+    <div class="form-wrapper">
+        <div class="calendar-container">
+            <p class="error">
+                {{ error }}
 
-        <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
-            <mat-form-field appearance="fill">
-                <input matInput formControlName="first_name" placeholder="Име..." />
-            </mat-form-field>
+            </p>
 
-            <mat-form-field appearance="fill">
-                <input matInput formControlName="last_name" placeholder="Фамилия..." />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <input matInput formControlName="email" placeholder="Имейл адрес..." />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <input matInput formControlName="phone" placeholder="Телефон..." />
-            </mat-form-field>
-
-            <div class="form-actions">
-                <button mat-button color="warn" type="button" (click)="showForm = false">❌ Отказ</button>
-                <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
-                    ✅ Потвърди
+            <div class="calendar-header">
+                <button mat-icon-button (click)="changeMonth(-1)">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+                <h2>{{ currentDate | date: 'MMMM yyyy' }}</h2>
+                <button mat-icon-button (click)="changeMonth(1)">
+                    <mat-icon>chevron_right</mat-icon>
                 </button>
             </div>
-        </form>
+
+            <div class="calendar-grid">
+                <div class="day-label" *ngFor="let day of dayNames">{{ day }}</div>
+                <div
+                    class="day-cell"
+                    *ngFor="let day of daysInMonth"
+                    [class.today]="isToday(day?.date)"
+                    [class.selected]="selectedDay === (day?.date | date:'yyyy-MM-dd')"
+                    (click)="selectDay(day)"
+                >
+                    {{ day?.date?.getDate() }}
+                </div>
+            </div>
+
+            <div class="time-slots" *ngIf="showSlots && selectedDay">
+                <h3>Available Times</h3>
+                <div class="time-grid">
+                    <button
+                        *ngFor="let time of getSelectedDaySlots()"
+                        class="time-btn"
+                        [disabled]="isSlotReserved(time)"
+                        (click)="openReservationPopup(time)"
+                    >
+                        {{ time }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="inline-form" *ngIf="showForm">
+            <h2 class="title">RESERVE NOW</h2>
+            <div class="selected-slot">
+                📅 <strong>{{ selectedDay }} от {{ selectedSlot }}</strong>
+            </div>
+
+            <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
+                <mat-form-field appearance="fill">
+                    <input matInput formControlName="first_name" placeholder="Име..."/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <input matInput formControlName="last_name" placeholder="Фамилия..."/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <input matInput formControlName="email" placeholder="Имейл адрес..."/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <input matInput formControlName="phone" placeholder="Телефон..."/>
+                </mat-form-field>
+
+                <div class="form-actions">
+                    <button mat-button color="warn" type="button" (click)="showForm = false">❌ Отказ</button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
+                        ✅ Потвърди
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </section>
 

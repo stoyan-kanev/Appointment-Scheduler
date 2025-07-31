@@ -18,21 +18,28 @@
 }
 
 /* ========== Barber Section ========== */
-.barber-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-.selected-barber {
-    outline: 4px solid #c6b22e;
-    border-radius: 12px;
-    transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
-}
-.barber-img-calendar {
-    width: 150px;
-    border-radius: 12px;
 
+.barber-select-wrapper {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.barber-select {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.barber-select:focus {
+    border-color: #c6b22e;
+    outline: none;
 }
 
 /* ========== Calendar & Form Containers ========== */

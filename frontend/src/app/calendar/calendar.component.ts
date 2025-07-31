@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {AppointmentService} from './appointment.service';
 import {AuthService} from '../auth/services/auth.service';
 import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-dialogue.component';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput} from '@angular/material/input';
 
 @Component({
@@ -23,6 +23,7 @@ import {MatFormField, MatInput} from '@angular/material/input';
         MatFormField,
         MatInput,
         MatFormField,
+        FormsModule,
     ],
     templateUrl: './calendar.component.html',
     styleUrl: './calendar.component.css'
@@ -39,7 +40,8 @@ export class CalendarComponent {
     selectedSlot: string | null = null;
     showForm = false;
     error = ''
-    selectedBarber: string | null = null;
+    selectedBarber: string = '';
+    barbers: string[] = ['Petur Petrov', 'Angel Nikolov'];
     constructor(
         private dialog: MatDialog,
         private appointmentService: AppointmentService,
@@ -76,7 +78,7 @@ export class CalendarComponent {
         this.selectedDay = null;
         this.reservedSlots = [];
         this.showSlots = false;
-        console.log('Selected barber:', barberName);
+        this.error = '';
     }
     generateMonth() {
         const year = this.currentDate.getFullYear();

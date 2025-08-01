@@ -3,10 +3,10 @@
         <div class="calendar-container">
             <p class="error">
                 {{ error }}
-
             </p>
+
             <div class="barber-select-wrapper">
-                <label for="barberSelect">Chose Barber</label>
+                <label for="barberSelect">{{ i18n.t('chooseBarber') }}</label>
                 <select
                     id="barberSelect"
                     class="barber-select"
@@ -14,12 +14,15 @@
                     name="barber"
                     (change)="selectBarber(selectedBarber)"
                 >
-                    <option disabled selected value="">-- Chose Barber --</option>
+                    <option disabled selected value="">
+                        -- {{ i18n.t('chooseBarber') }} --
+                    </option>
                     <option *ngFor="let barber of barbers" [value]="barber">
                         {{ barber }}
                     </option>
                 </select>
             </div>
+
             <div class="calendar-header">
                 <button mat-icon-button (click)="changeMonth(-1)">
                     <mat-icon>chevron_left</mat-icon>
@@ -44,26 +47,25 @@
             </div>
 
             <div *ngIf="selectedDay">
-
-                <h3>Service Types</h3>
-
+                <h3>{{ i18n.t('serviceTypes') }}</h3>
                 <select
-                    id="barberSelect"
+                    id="serviceSelect"
                     class="barber-select"
                     [(ngModel)]="selectedService"
                     name="service"
                     (change)="selectService(selectedService)"
                 >
-                    <option disabled selected value="">-- Chose Service --</option>
+                    <option disabled selected value="">
+                        -- {{ i18n.t('chooseService') }} --
+                    </option>
                     <option *ngFor="let service of services" [value]="service">
-                        {{ service }}
+                        {{ i18n.t(service) }}
                     </option>
                 </select>
-
             </div>
 
             <div class="time-slots" *ngIf="showSlots && selectedDay">
-                <h3>Available Times</h3>
+                <h3>{{ i18n.t('availableTimes') }}</h3>
                 <div class="time-grid">
                     <button
                         *ngFor="let time of getSelectedDaySlots()"
@@ -76,37 +78,39 @@
                 </div>
             </div>
         </div>
+
         <div class="inline-form" *ngIf="showForm">
-            <h2 class="title">RESERVE NOW</h2>
+            <h2 class="title">{{ i18n.t('reserveNow') }}</h2>
             <div class="selected-slot">
-                📅 <strong>{{ selectedDay }} от {{ selectedSlot }}</strong>
+                📅 <strong>{{ selectedDay }} {{ i18n.t('at') }} {{ selectedSlot }}</strong>
             </div>
 
             <form [formGroup]="reservationForm" (ngSubmit)="submitForm()">
                 <mat-form-field appearance="fill">
-                    <input matInput formControlName="first_name" placeholder="Име..."/>
+                    <input matInput formControlName="first_name" [placeholder]="i18n.t('firstName')" />
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <input matInput formControlName="last_name" placeholder="Фамилия..."/>
+                    <input matInput formControlName="last_name" [placeholder]="i18n.t('lastName')" />
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <input matInput formControlName="email" placeholder="Имейл адрес..."/>
+                    <input matInput formControlName="email" [placeholder]="i18n.t('email2')" />
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <input matInput formControlName="phone" placeholder="Телефон..."/>
+                    <input matInput formControlName="phone" [placeholder]="i18n.t('phone2')" />
                 </mat-form-field>
 
                 <div class="form-actions">
-                    <button mat-button color="warn" type="button" (click)="showForm = false">❌ Cancel</button>
+                    <button mat-button color="warn" type="button" (click)="showForm = false">
+                        ❌ {{ i18n.t('cancel') }}
+                    </button>
                     <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
-                        ✅ Reserve
+                        ✅ {{ i18n.t('reserve') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </section>
-

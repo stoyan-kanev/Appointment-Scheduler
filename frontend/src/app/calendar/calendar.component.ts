@@ -9,6 +9,7 @@ import {AuthService} from '../auth/services/auth.service';
 import {AppointmentDialogueComponent} from './appointment-dialogue/appointment-dialogue.component';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput} from '@angular/material/input';
+import {I18nService} from '../services/i18n.service';
 
 @Component({
     selector: 'app-calendar',
@@ -45,22 +46,23 @@ export class CalendarComponent {
 
     selectedService: string = ''
     services = [
-        "Male Haircut",
-        "Beard Shaping",
-        "Combo",
-        "Father and Son",
-        "Beard + Dyeing",
-        "Hair Camouflage",
-        "Head Shave",
-        "Head Shave + Beard",
-        "Clipper Haircut (One Guard)",
-    ]
+        'maleHaircut',
+        'beardShaping',
+        'combo',
+        'fatherAndSon',
+        'beardDyeing',
+        'hairCamouflage',
+        'headShave',
+        'headShaveBeard',
+        'clipperHaircut',
+    ];
 
     constructor(
         private dialog: MatDialog,
         private appointmentService: AppointmentService,
         private authService: AuthService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        public i18n: I18nService
     ) {
         this.authService.getAuthStatus().subscribe(status => {
             this.isBarber = status;
@@ -219,7 +221,7 @@ export class CalendarComponent {
     submitForm() {
         if (this.reservationForm.invalid || !this.selectedDay || !this.selectedSlot) return;
 
-        if(!this.selectedService) {
+        if (!this.selectedService) {
             this.error = 'Select Service Before Submitting';
         }
 

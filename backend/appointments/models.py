@@ -3,6 +3,7 @@ from django.db import models
 class Appointment(models.Model):
     first_name = models.CharField(max_length=100, default="Unknown")
     last_name = models.CharField(max_length=100, default="Person")
+    service_type = models.CharField(max_length=100, default="Unknown")
     email = models.EmailField(default="unknown@example.com")
     phone = models.CharField(max_length=20, default="0000000000")
     date_time = models.DateTimeField()

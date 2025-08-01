@@ -6,7 +6,7 @@
 
             </p>
             <div class="barber-select-wrapper">
-                <label for="barberSelect">Избери барбър</label>
+                <label for="barberSelect">Chose Barber</label>
                 <select
                     id="barberSelect"
                     class="barber-select"
@@ -14,7 +14,7 @@
                     name="barber"
                     (change)="selectBarber(selectedBarber)"
                 >
-                    <option disabled selected value="">-- Избери барбър --</option>
+                    <option disabled selected value="">-- Chose Barber --</option>
                     <option *ngFor="let barber of barbers" [value]="barber">
                         {{ barber }}
                     </option>
@@ -43,6 +43,24 @@
                 </div>
             </div>
 
+            <div *ngIf="selectedDay">
+
+                <h3>Service Types</h3>
+
+                <select
+                    id="barberSelect"
+                    class="barber-select"
+                    [(ngModel)]="selectedService"
+                    name="service"
+                    (change)="selectService(selectedService)"
+                >
+                    <option disabled selected value="">-- Chose Service --</option>
+                    <option *ngFor="let service of services" [value]="service">
+                        {{ service }}
+                    </option>
+                </select>
+
+            </div>
 
             <div class="time-slots" *ngIf="showSlots && selectedDay">
                 <h3>Available Times</h3>
@@ -82,9 +100,9 @@
                 </mat-form-field>
 
                 <div class="form-actions">
-                    <button mat-button color="warn" type="button" (click)="showForm = false">❌ Отказ</button>
+                    <button mat-button color="warn" type="button" (click)="showForm = false">❌ Cancel</button>
                     <button mat-raised-button color="primary" type="submit" [disabled]="reservationForm.invalid">
-                        ✅ Потвърди
+                        ✅ Reserve
                     </button>
                 </div>
             </form>

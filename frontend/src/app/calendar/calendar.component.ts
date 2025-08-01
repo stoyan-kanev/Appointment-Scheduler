@@ -42,6 +42,20 @@ export class CalendarComponent {
     error = ''
     selectedBarber: string = '';
     barbers: string[] = ['Petur Petrov', 'Angel Nikolov'];
+
+    selectedService: string = ''
+    services = [
+        "Male Haircut",
+        "Beard Shaping",
+        "Combo",
+        "Father and Son",
+        "Beard + Dyeing",
+        "Hair Camouflage",
+        "Head Shave",
+        "Head Shave + Beard",
+        "Clipper Haircut (One Guard)",
+    ]
+
     constructor(
         private dialog: MatDialog,
         private appointmentService: AppointmentService,
@@ -73,6 +87,7 @@ export class CalendarComponent {
         this.generateMonth();
         this.selectedDay = null;
     }
+
     selectBarber(barberName: string) {
         this.selectedBarber = barberName;
         this.selectedDay = null;
@@ -80,6 +95,12 @@ export class CalendarComponent {
         this.showSlots = false;
         this.error = '';
     }
+
+    selectService(service: string) {
+        this.selectedService = service;
+        this.error = '';
+    }
+
     generateMonth() {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
@@ -135,7 +156,7 @@ export class CalendarComponent {
         this.selectedDay = `${year}-${month}-${date}`;
         this.showSlots = true;
 
-        this.appointmentService.getReservedSlots(this.selectedDay,this.selectedBarber).subscribe({
+        this.appointmentService.getReservedSlots(this.selectedDay, this.selectedBarber).subscribe({
             next: (res) => {
                 this.reservedSlots = res.reserved_slots;
             },
@@ -198,19 +219,27 @@ export class CalendarComponent {
     submitForm() {
         if (this.reservationForm.invalid || !this.selectedDay || !this.selectedSlot) return;
 
+        if(!this.selectedService) {
+            this.error = 'Select Service Before Submitting';
+        }
+
         const date_time = `${this.selectedDay} ${this.selectedSlot.split(' - ')[0]}`;
         const payload = {
             ...this.reservationForm.value,
             date_time,
-            barber_name: this.selectedBarber
+            barber_name: this.selectedBarber,
+            service_type: this.selectedService,
         };
 
         this.appointmentService.createAppointment(payload).subscribe({
             next: () => {
                 this.showForm = false;
                 this.selectedSlot = null;
-                this.appointmentService.getReservedSlots(this.selectedDay!,this.selectedBarber).subscribe({
-                    next: (res) => this.reservedSlots = res.reserved_slots,
+                this.appointmentService.getReservedSlots(this.selectedDay!, this.selectedBarber).subscribe({
+                    next: (res) => {
+                        this.reservedSlots = res.reserved_slots
+                        window.location.reload();
+                    },
                     error: (err) => console.error(err)
                 });
             },
@@ -228,7 +257,7 @@ export class CalendarComponent {
     onReservationSuccess() {
         this.closeInlineForm();
         if (this.selectedDay) {
-            this.appointmentService.getReservedSlots(this.selectedDay,this.selectedBarber).subscribe({
+            this.appointmentService.getReservedSlots(this.selectedDay, this.selectedBarber).subscribe({
                 next: (res) => this.reservedSlots = res.reserved_slots,
                 error: (err) => console.error('Error updating slots:', err)
             });

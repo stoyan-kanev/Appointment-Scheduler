@@ -1,0 +1,16 @@
+<section class="hero-section">
+    <img class="background-image" src="/bg.jpg" alt="Background" />
+
+    <div class="overlay">
+        <div class="text-wrapper">
+            <h1 class="home-title">{{ i18n.t('services') }}</h1>
+
+            <div class="services-grid">
+                <div class="service-card" *ngFor="let service of services">
+                    <h2>{{ i18n.t(service.key) }}</h2>
+                    <span class="price">{{ service.price }} лв</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,16 @@
+<section class="hero-section team-page">
+    <img class="background-image" src="/bg.jpg" alt="background image" />
+
+    <div class="overlay">
+        <div class="text-wrapper">
+            <h1 class="our-team-title">{{ i18n.t('team') }}</h1>
+
+            <div class="team-grid">
+                <div class="barber-card" *ngFor="let barber of barbers">
+                    <img [src]="barber.image" alt="{{ barber.name }}" class="barber-image" />
+                    <h2>{{ barber.name }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

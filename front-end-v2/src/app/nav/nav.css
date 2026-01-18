@@ -129,26 +129,107 @@
 .left-header{
 
 }
+.middle-header ul {
+    list-style: none;          /* removes bullets */
+    margin: 0;
+    padding: 0;
 
-.middle-header{
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
+    display: flex;             /* ✅ row layout */
+    flex-direction: row;       /* ✅ explicit row */
     align-items: center;
-}
-.middle-header ul{
-    display: flex;
+    justify-content: center;
     gap: 16px;
-    flex-direction: row;
-
 }
-.middle-header a{
-    padding: 6px;
-    border-radius: 8px;
 
+.middle-header li {
+    display: flex;             /* keeps it clean */
 }
-.middle-header a:hover{
-    border: 1px solid white;
+.middle-header a.glass-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    overflow: hidden; /* ✅ important */
+
+    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+/* moving "shine" */
+.middle-header a.glass-link::before {
+    content: "";
+    position: absolute;
+    inset: -40px; /* ✅ bigger area so it never cuts */
+
+    background: radial-gradient(
+        160px 70px at var(--mx, 50%) var(--my, 50%),
+        rgba(255, 255, 255, 0.45),
+        rgba(255, 255, 255, 0) 60%
+    );
+
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+}
+
+/* subtle bubble rim */
+.middle-header a.glass-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25),
+        rgba(255, 255, 255, 0.05)
+    );
+
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.middle-header a.glass-link:hover {
+    transform: translateY(-1px) scale(1.03);
+    border-color: rgba(255, 255, 255, 0.30);
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.middle-header a.glass-link:hover::before,
+.middle-header a.glass-link:hover::after {
+    opacity: 1;
+}
+
+
+
+/* "swerve-like" wobble */
+@media (prefers-reduced-motion: no-preference) {
+    .middle-header a.glass-link:hover {
+        animation: glassWobble 650ms ease;
+    }
+
+    @keyframes glassWobble {
+        0%   { transform: translateY(-1px) scale(1.03) rotate(0deg); }
+        25%  { transform: translateY(-2px) scale(1.04) rotate(-1deg); }
+        60%  { transform: translateY(-1px) scale(1.035) rotate(1deg); }
+        100% { transform: translateY(-1px) scale(1.03) rotate(0deg); }
+    }
 }
 
 

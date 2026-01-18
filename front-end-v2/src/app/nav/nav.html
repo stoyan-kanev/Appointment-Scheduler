@@ -34,18 +34,42 @@
         <p>MAINA TOWN</p>
     </div>
     <div class="middle-header">
-        <div>
-            <p>WWW.MAINATOWN.COM</p>
-        </div>
+
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a routerLink="barbers">Barbers</a></li>
-            <li><a href="">About Us</a></li>
-            <li><a href="">Contact</a></li>
+            <li>
+                <a class="glass-link"
+                   routerLink="/"
+                   (mousemove)="glassMove($event)"
+                   (mouseleave)="glassLeave($event)">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="glass-link"
+                   routerLink="barbers"
+                   (mousemove)="glassMove($event)"
+                   (mouseleave)="glassLeave($event)">
+                    Barbers
+                </a>
+            </li>
+            <li><a class="glass-link"
+                   routerLink="/"
+                   (mousemove)="glassMove($event)"
+                   (mouseleave)="glassLeave($event)">
+                About Us
+            </a></li>
+            <li>
+                <a class="glass-link"
+                   routerLink="/"
+                   (mousemove)="glassMove($event)"
+                   (mouseleave)="glassLeave($event)">
+                    Contact Us
+                </a>
+            </li>
         </ul>
     </div>
     <div class="right-header">
-<!--        <img src="/logo.png" alt="">-->
+        <!--        <img src="/logo.png" alt="">-->
         <button class="burger-btn" [class.open]="isMenuOpen" (click)="toggleMenu()">
             <span></span>
             <span></span>

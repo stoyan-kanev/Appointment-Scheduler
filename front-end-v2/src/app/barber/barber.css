@@ -9,7 +9,6 @@
     gap: 28px;
 }
 
-/* ✅ Modern clean card */
 .barber-card {
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -29,18 +28,15 @@
     box-shadow: 0 16px 38px rgba(0, 0, 0, 0.14);
 }
 
-/* ✅ IMAGE BOX */
 .barber-image {
     width: 100%;
     height: 220px;
     overflow: hidden;
 
-    /* helps remove “gap/line” issues */
     position: relative;
     background: #f2f4ff;
 }
 
-/* ✅ Image MUST fill 100% with no white lines */
 .barber-image img {
     position: absolute;
     inset: 0;
@@ -56,7 +52,6 @@
     outline: 0;
 }
 
-/* ✅ Info section */
 .barber-info {
     padding: 18px 18px 14px;
     display: flex;
@@ -82,7 +77,6 @@
     color: rgba(255, 255, 255, 0.55);
 }
 
-/* ✅ Logo area */
 .barber-logo {
     padding: 14px 18px 18px;
     display: flex;
@@ -96,7 +90,7 @@
     opacity: 0.9;
 }
 .flip-card {
-    height: 520px;          /* must be >= your front card height */
+    height: 520px;
     perspective: 1200px;
     cursor: pointer;
 }
@@ -110,7 +104,6 @@
     border-radius: 22px;
 }
 
-/* Click flip */
 .flip-inner.is-flipped {
     transform: rotateY(180deg);
 }
@@ -126,12 +119,10 @@
     overflow: hidden;
 }
 
-/* Front: we keep your existing .barber-card design */
 .flip-front .barber-card {
     height: 100%;
 }
 
-/* Back side */
 .flip-back {
     transform: rotateY(180deg);
     background: #ffffff;
@@ -139,7 +130,6 @@
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
 }
 
-/* Back content styling (modern, matches your theme) */
 .back-wrap {
     height: 100%;
     padding: 22px;

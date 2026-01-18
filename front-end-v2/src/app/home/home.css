@@ -1,0 +1,26 @@
+.bg-container{
+    padding-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.img{
+    width: 70%;
+    margin-bottom:20px;
+}
+
+.btn{
+    background-color: #1355d5;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    transition: 0.3s ease-in-out;
+
+}
+.btn:hover{
+    background-color: #13a7e0;
+    transition: 0.3s ease-in-out;
+}

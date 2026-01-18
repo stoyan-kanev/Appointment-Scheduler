@@ -4,7 +4,9 @@ from users.models import User
 
 
 # Create your models here.
-class Barbers(models.Model):
+class BarbersModel(models.Model):
     name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, default='barber')
+    description = models.TextField(default='')
     users = models.ManyToManyField(User)
     is_barber = models.BooleanField(default=False)

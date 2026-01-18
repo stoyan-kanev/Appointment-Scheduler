@@ -1,0 +1,17 @@
+<div class="form-wrapper">
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+        <label>Username:</label>
+        <input type="text" formControlName="username" required />
+        <label>Email:</label>
+        <input type="text" formControlName="email" required />
+        <label>Password:</label>
+        <input type="password" formControlName="password" required />
+        <label>First Name:</label>
+        <input type="text" formControlName="first_name" required />
+        <label>Last Name:</label>
+        <input type="text" formControlName="last_name" required />
+        <label>Age:</label>
+        <input type="number" formControlName="age" required />
+        <button type="submit" [disabled]="registerForm.invalid">Save Appointment</button>
+    </form>
+</div>

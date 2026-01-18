@@ -1,0 +1,61 @@
+<!--<nav class="navbar">-->
+<!--  <div class="btn-wrapper">-->
+<!--    <button class="lang-btn"  (click)="changeLang('en')" >EN</button>-->
+<!--    <button class="lang-btn" (click)="changeLang('bg')">BG</button>-->
+<!--  </div>-->
+<!--  <div class="logo">-->
+<!--    <a routerLink="/"><img class="logo" src="logo.png" alt="logo"/></a>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Desktop Navigation &ndash;&gt;-->
+<!--  <ul class="nav-links">-->
+<!--    <li><a routerLink="/">{{ i18n.t('home') }}</a></li>-->
+<!--    <li><a routerLink="/about">{{ i18n.t('about') }}</a></li>-->
+<!--    <li><a routerLink="/services">{{ i18n.t('services') }}</a></li>-->
+<!--    <li><a routerLink="/team">{{ i18n.t('team') }}</a></li>-->
+<!--  </ul>-->
+
+<!--  &lt;!&ndash; Mobile Menu Button &ndash;&gt;-->
+<!--  <div class="menu-toggle" (click)="toggleMenu()">-->
+<!--    ☰-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Mobile Dropdown &ndash;&gt;-->
+<!--  <ul class="mobile-menu" [ngClass]="{ 'open': isMenuOpen }">-->
+<!--    <li><a routerLink="/" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('home') }}</a></li>-->
+<!--    <li><a routerLink="/about" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('about') }}</a></li>-->
+<!--    <li><a routerLink="/services" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('services') }}</a></li>-->
+<!--    <li><a routerLink="/team" routerLinkActive="active" (click)="toggleMenu()">{{ i18n.t('team') }}</a></li>-->
+<!--  </ul>-->
+<!--</nav>-->
+
+<nav class="navbar">
+    <div class="left-header">
+        <p>MAINA TOWN</p>
+    </div>
+    <div class="middle-header">
+        <div>
+            <p>WWW.MAINATOWN.COM</p>
+        </div>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a routerLink="barbers">Barbers</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </div>
+    <div class="right-header">
+<!--        <img src="/logo.png" alt="">-->
+        <button class="burger-btn" [class.open]="isMenuOpen" (click)="toggleMenu()">
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="mobile-menu" [class.open]="isMenuOpen">
+            <div class="mobile-control">
+                <button class="mobile-close-btn" (click)="toggleMenu()">X</button>
+
+            </div>
+        </nav>
+
+    </div>
+</nav>

@@ -1,0 +1,46 @@
+<div class="barber-content">
+    @if (barbers$ | async; as barbers) {
+        @for (barber of barbers; track barber.id) {
+
+            <div class="flip-card" (click)="toggleFlip(barber.id)">
+                <div class="flip-inner" [class.is-flipped]="flippedId === barber.id">
+
+                    <!-- FRONT (your current design) -->
+                    <div class="flip-face flip-front">
+                        <div class="barber-card">
+
+                            <div class="barber-image">
+                                <img src="2.jpg" alt="Barber photo" />
+                            </div>
+
+                            <div class="barber-info">
+                                <h3 class="barber-name">{{ barber.name }}</h3>
+                                <p class="barber-role">{{ barber.role }}</p>
+                            </div>
+
+                            <div class="barber-logo">
+                                <img src="lgoo.png" alt="Barbershop logo" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- BACK -->
+                    <div class="flip-face flip-back">
+                        <div class="back-wrap">
+                            <h3 class="back-name">{{ barber.name }}</h3>
+                            <p class="back-role">{{ barber.role }}</p>
+
+                            <p class="back-desc">
+                                {{ barber.description || 'Add a short bio/description for this barber (specialties, experience, style, etc.).' }}
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+    }
+</div>

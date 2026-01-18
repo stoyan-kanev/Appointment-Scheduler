@@ -1,4 +1,4 @@
-#!/home/lazy/Appointment-Scheduler/backend/.venv/bin/python3
+#!/Users/stoyankanev/Projects/Appointment-Scheduler/backend/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

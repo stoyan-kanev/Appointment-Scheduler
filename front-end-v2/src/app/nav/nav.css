@@ -1,0 +1,211 @@
+/*!* General Navbar Styling *!*/
+/*.navbar {*/
+/*  display: flex;*/
+/*  z-index: 10;*/
+/*  width: 100%;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*  background-color: rgba(0, 0, 0, 0.8);*/
+/*  padding: 0 30px;*/
+/*  color: white;*/
+/*  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*.logo img{*/
+/*  width: 100px;*/
+/*  height: 100px;*/
+/*}*/
+
+/*!* Desktop Navigation *!*/
+/*.nav-links {*/
+/*  list-style: none;*/
+
+/*  display: flex;*/
+/*  gap: 20px;*/
+/*}*/
+
+/*.nav-links li {*/
+/*  display: inline;*/
+/*}*/
+
+/*.nav-links a {*/
+/*  text-decoration: none;*/
+/*  color: white;*/
+
+/*  font-size: 18px;*/
+/*  transition: 0.3s;*/
+/*  padding: 5px 10px;*/
+/*}*/
+
+/*.nav-links a:hover, .nav-links a.active {*/
+/*  color: #c6b22e;*/
+/*  border-bottom: 2px solid  #c6b22e;*/
+/*}*/
+
+/*!* Mobile Menu Button *!*/
+/*.menu-toggle {*/
+/*  display: none;*/
+/*  font-size: 24px;*/
+/*  cursor: pointer;*/
+/*}*/
+/*.logo{*/
+/*  width: 100px;*/
+/*  height: 100px;*/
+/*  margin-left: 13%;*/
+/*}*/
+
+/*!* Mobile Navigation *!*/
+/*.mobile-menu {*/
+/*  display: none;*/
+/*  flex-direction: column;*/
+/*  background: #222;*/
+/*  position: absolute;*/
+/*  top: 60px;*/
+/*  right: 0;*/
+/*  width: 200px;*/
+/*  padding: 10px 20px;*/
+/*  border-radius: 5px;*/
+/*  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*.mobile-menu.open {*/
+/*  display: flex;*/
+/*  z-index: 9;*/
+/*}*/
+
+/*.mobile-menu li {*/
+/*  list-style: none;*/
+/*  padding: 10px 0;*/
+/*}*/
+
+/*.mobile-menu a {*/
+/*  text-decoration: none;*/
+/*  color: white;*/
+/*  font-size: 18px;*/
+/*}*/
+/*.btn-wrapper{*/
+/*  display: flex;*/
+/*  gap: 15px;*/
+/*}*/
+/*.lang-btn{*/
+/*  color: white;*/
+/*}*/
+/*.lang-btn:nth-child(2){*/
+/*  padding-left: 15px;*/
+/*  border-left: 1px solid white;*/
+/*}*/
+/*.lang-btn:hover{*/
+/*  color: #aa881a;*/
+/*}*/
+/*!* Responsive Design *!*/
+/*@media (max-width: 768px) {*/
+/*  .nav-links {*/
+/*    display: none;*/
+/*  }*/
+/*  .logo{*/
+/*    margin-right: 25%;*/
+/*  }*/
+/*  .menu-toggle {*/
+/*    display: block;*/
+/*  }*/
+/*}*/
+
+
+
+.navbar{
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #292931;
+    height: 80px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.left-header{
+
+}
+
+.middle-header{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+.middle-header ul{
+    display: flex;
+    gap: 16px;
+    flex-direction: row;
+
+}
+.middle-header a{
+    padding: 6px;
+    border-radius: 8px;
+
+}
+.middle-header a:hover{
+    border: 1px solid white;
+}
+
+
+.burger-btn {
+    width: 40px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6px 4px;
+}
+
+.burger-btn span {
+    height: 4px;
+    width: 100%;
+    background: white;   /* сменяш според темата */
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+.burger-btn.open span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+}
+
+.burger-btn.open span:nth-child(2) {
+    transform: rotate(-45deg) translateY(-10px);
+}
+.mobile-menu.open ~ .burger-btn span:nth-child(1) {
+    transform: rotate(45deg) translateY(10px);
+}
+
+.mobile-menu.open ~ .burger-btn span:nth-child(2) {
+    transform: rotate(-45deg) translateY(-10px);
+}
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 15%;
+    height: 100vh;
+    background-color: #43434d;
+    transition: 0.3s ease;
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+.mobile-close-btn{
+    color: white;
+    font-size: 30px;
+    padding: 10px 20px;
+}
+.mobile-control {
+    display: flex;
+    flex-direction: row-reverse;
+}

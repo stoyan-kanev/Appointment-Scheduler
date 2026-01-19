@@ -92,13 +92,22 @@
                     }
                 </div>
 
-                <button class="submit" type="submit" [disabled]="sending">
+                <button class="submit"
+                        type="submit"
+                        [disabled]="sending || form.invalid">
                     {{ sending ? 'Sending...' : 'Send message' }}
                 </button>
+
+
+                @if (serverError) {
+                    <div class="error-box">{{ serverError }}</div>
+                }
 
                 @if (sent) {
                     <div class="success">Message sent. We’ll get back to you soon.</div>
                 }
+
+
             </form>
 
             <div class="map">

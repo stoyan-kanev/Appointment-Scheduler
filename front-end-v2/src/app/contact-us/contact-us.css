@@ -173,7 +173,7 @@ form {
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: rgba(0, 0, 0, 0.18);
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(33, 28, 28, 0.88);
     padding: 12px 12px;
     outline: none;
     transition: border-color 0.2s ease, background 0.2s ease;
@@ -196,7 +196,7 @@ form {
     margin-top: 4px;
     width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(100, 108, 255, 0.22);
+    background: rgb(100, 108, 255);
     color: #fff;
     font-weight: 900;
     padding: 12px 14px;
@@ -211,17 +211,18 @@ form {
 }
 
 .submit:disabled {
-    opacity: 0.7;
+    opacity: 0.55;
     cursor: not-allowed;
-}
-
+    transform: none; /* да не се мести */
+    pointer-events: none;
+}g
 .success {
     margin-top: 10px;
     padding: 10px 12px;
     border-radius: 14px;
     border: 1px solid rgba(80, 220, 150, 0.28);
     background: rgba(80, 220, 150, 0.10);
-    color: rgba(190, 255, 225, 0.92);
+    color: rgba(69, 180, 129, 0.92);
     font-weight: 700;
 }
 
@@ -252,4 +253,13 @@ form {
     .contact-hero h1 {
         font-size: 32px;
     }
+}
+.error-box {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 110, 110, 0.35);
+    background: rgba(255, 110, 110, 0.10);
+    color: rgba(255, 200, 200, 0.92);
+    font-weight: 700;
 }

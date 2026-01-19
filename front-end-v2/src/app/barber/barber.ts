@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Barber, BarberService} from '../services/barberServices';
+import {Barber, BarberService} from '../services/barber.services';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgForOf} from '@angular/common';
 

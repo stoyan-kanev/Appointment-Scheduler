@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users',
     'appointments',
-    'barbers'
+    'barbers',
+    'contacts'
 ]
 
 MIDDLEWARE = [

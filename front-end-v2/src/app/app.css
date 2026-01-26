@@ -4,15 +4,16 @@ html, body {
 }
 
 body {
-    background: #1f1f27; /* ✅ same theme so no white box */
+    background: #1f1f27;
+
 }
 
 .app-layout {
-    min-height: 100vh;  /* ✅ full screen height */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .app-main {
-    flex: 1;            /* ✅ takes remaining space */
+    flex: 1;
 }

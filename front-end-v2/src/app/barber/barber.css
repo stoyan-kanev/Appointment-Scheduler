@@ -1,12 +1,28 @@
+.barber-wrapper {
+    padding-bottom: 20%;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),
+        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);
+
+    background-attachment: fixed;
+}
+
 .barber-content {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 28px;
+
+    padding: clamp(14px, 1.6vw, 28px);
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 28px;
+    grid-template-columns: repeat(
+    auto-fill,
+    minmax(clamp(210px, 18vw, 260px), 1fr)
+  );
+    gap: clamp(14px, 1.6vw, 28px);
+
 }
 
 .barber-card {
@@ -30,7 +46,7 @@
 
 .barber-image {
     width: 100%;
-    height: 220px;
+    height: clamp(160px, 18vw, 220px);
     overflow: hidden;
 
     position: relative;
@@ -53,16 +69,17 @@
 }
 
 .barber-info {
-    padding: 18px 18px 14px;
+    padding: clamp(14px, 1.2vw, 18px) clamp(14px, 1.2vw, 18px)
+    clamp(12px, 1vw, 14px);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: clamp(6px, 0.7vw, 8px);
     background: #000000;
 }
 
 .barber-name {
     margin: 0;
-    font-size: 18px;
+    font-size: clamp(16px, 1.2vw, 18px);
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.2px;
@@ -70,7 +87,7 @@
 
 .barber-role {
     margin: 0;
-    font-size: 12px;
+    font-size: clamp(11px, 0.9vw, 12px);
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -78,19 +95,21 @@
 }
 
 .barber-logo {
-    padding: 14px 18px 18px;
+    padding: clamp(10px, 1vw, 14px) clamp(14px, 1.2vw, 18px)
+    clamp(14px, 1.2vw, 18px);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .barber-logo img {
-    height: 150px;
+    height: clamp(96px, 10vw, 150px);
     width: auto;
     opacity: 0.9;
 }
+
 .flip-card {
-    height: 520px;
+    height: clamp(410px, 40vw, 520px);
     perspective: 1200px;
     cursor: pointer;
 }
@@ -107,8 +126,6 @@
 .flip-inner.is-flipped {
     transform: rotateY(180deg);
 }
-
-
 
 .flip-face {
     position: absolute;
@@ -132,22 +149,22 @@
 
 .back-wrap {
     height: 100%;
-    padding: 22px;
+    padding: clamp(16px, 1.4vw, 22px);
     display: flex;
     flex-direction: column;
 }
 
 .back-name {
     margin: 0;
-    font-size: 20px;
+    font-size: clamp(18px, 1.4vw, 20px);
     font-weight: 900;
     color: #111;
     letter-spacing: -0.2px;
 }
 
 .back-role {
-    margin: 10px 0 0;
-    font-size: 12px;
+    margin: clamp(8px, 1vw, 10px) 0 0;
+    font-size: clamp(11px, 0.9vw, 12px);
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -155,9 +172,9 @@
 }
 
 .back-desc {
-    margin: 16px 0 0;
-    font-size: 14px;
-    line-height: 1.6;
+    margin: clamp(12px, 1.2vw, 16px) 0 0;
+    font-size: clamp(13px, 1vw, 14px);
+    line-height: 1.55;
     color: rgba(0, 0, 0, 0.72);
 }
 
@@ -165,7 +182,7 @@
 .back-btn {
     margin-top: auto;
     width: 100%;
-    padding: 12px 14px;
+    padding: clamp(10px, 1vw, 12px) clamp(12px, 1.1vw, 14px);
     border: 0;
     border-radius: 14px;
     font-weight: 900;

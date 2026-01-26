@@ -1,120 +1,126 @@
-<section class="contact-page">
-    <header class="contact-hero">
-        <h1>Contact Us</h1>
-        <p>Questions, bookings, or custom requests — reach out and we’ll respond fast.</p>
-    </header>
+<div class="contact-wrapper">
 
-    <div class="contact-grid">
-        <!-- Left: info -->
-        <div class="panel info">
-            <h2>MAINA TOWN</h2>
-            <p class="muted">Barbershop • Style • Confidence</p>
+    <section class="contact-page">
+        <header class="contact-hero">
+            <h1>Contact Us</h1>
+            <p>Questions, bookings, or custom requests — reach out and we’ll respond fast.</p>
+        </header>
 
-            <div class="info-list">
-                <div class="info-item">
-                    <span class="label">Phone</span>
-                    <a href="tel:+359000000000">+359 00 000 0000</a>
+        <div class="contact-grid">
+            <!-- Left: info -->
+            <div class="panel info">
+                <h2>MAINA TOWN</h2>
+                <p class="muted">Barbershop • Style • Confidence</p>
+
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="label">Phone</span>
+                        <a href="tel:+359000000000">+359 00 000 0000</a>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Email</span>
+                        <a href="mailto:info@mainatown.com">info&#64;mainatown.com</a>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Address</span>
+                        <span>Plovdiv, Bulgaria</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Hours</span>
+                        <span>Mon–Sat • 10:00–20:00</span>
+                    </div>
                 </div>
 
-                <div class="info-item">
-                    <span class="label">Email</span>
-                    <a href="mailto:info@mainatown.com">info&#64;mainatown.com</a>
+                <div class="divider"></div>
+
+                <div class="socials">
+                    <a class="social" href="#" aria-label="Instagram">IG</a>
+                    <a class="social" href="#" aria-label="TikTok">TT</a>
+                    <a class="social" href="#" aria-label="Facebook">FB</a>
                 </div>
 
-                <div class="info-item">
-                    <span class="label">Address</span>
-                    <span>Plovdiv, Bulgaria</span>
-                </div>
-
-                <div class="info-item">
-                    <span class="label">Hours</span>
-                    <span>Mon–Sat • 10:00–20:00</span>
+                <div class="logo-box">
+                    <img src="lgoo.png" alt="Maina Town logo"/>
                 </div>
             </div>
 
-            <div class="divider"></div>
+            <!-- Right: form -->
+            <div class="panel form">
+                <h2>Send a message</h2>
+                <p class="muted">We usually respond within the same day.</p>
 
-            <div class="socials">
-                <a class="social" href="#" aria-label="Instagram">IG</a>
-                <a class="social" href="#" aria-label="TikTok">TT</a>
-                <a class="social" href="#" aria-label="Facebook">FB</a>
-            </div>
+                <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+                    <div class="row">
+                        <div class="field">
+                            <p>Name</p>
+                            <input type="text" formControlName="name" placeholder="Your name"/>
+                            @if (nameCtrl?.touched && nameCtrl?.invalid) {
+                                <small class="error">Name is required (min 2 chars).</small>
+                            }
+                        </div>
 
-            <div class="logo-box">
-                <img src="lgoo.png" alt="Maina Town logo" />
-            </div>
-        </div>
+                        <div class="field">
+                            <p>Email</p>
+                            <input type="email" formControlName="email" placeholder="you@email.com"/>
+                            @if (emailCtrl?.touched && emailCtrl?.invalid) {
+                                <small class="error">Enter a valid email.</small>
+                            }
+                        </div>
+                    </div>
 
-        <!-- Right: form -->
-        <div class="panel form">
-            <h2>Send a message</h2>
-            <p class="muted">We usually respond within the same day.</p>
+                    <div class="row">
+                        <div class="field">
+                            <p>Phone (optional)</p>
+                            <input type="text" formControlName="phone" placeholder="+359..."/>
+                        </div>
 
-            <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-                <div class="row">
+                        <div class="field">
+                            <p>Subject</p>
+                            <input type="text" formControlName="subject" placeholder="Booking / Question / Other"/>
+                            @if (subjectCtrl?.touched && subjectCtrl?.invalid) {
+                                <small class="error">Subject is required (min 3 chars).</small>
+                            }
+                        </div>
+                    </div>
+
                     <div class="field">
-                        <label>Name</label>
-                        <input type="text" formControlName="name" placeholder="Your name" />
-                        @if (nameCtrl?.touched && nameCtrl?.invalid) {
-                            <small class="error">Name is required (min 2 chars).</small>
+                        <p>Message</p>
+                        <textarea rows="6" formControlName="message" placeholder="Write your message..."></textarea>
+                        @if (messageCtrl?.touched && messageCtrl?.invalid) {
+                            <small class="error">Message is required (min 10 chars).</small>
                         }
                     </div>
 
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="email" formControlName="email" placeholder="you@email.com" />
-                        @if (emailCtrl?.touched && emailCtrl?.invalid) {
-                            <small class="error">Enter a valid email.</small>
-                        }
-                    </div>
-                </div>
+                    <button class="submit"
+                            type="submit"
+                            [disabled]="sending || form.invalid">
+                        {{ sending ? 'Sending...' : 'Send message' }}
+                    </button>
 
-                <div class="row">
-                    <div class="field">
-                        <label>Phone (optional)</label>
-                        <input type="text" formControlName="phone" placeholder="+359..." />
-                    </div>
 
-                    <div class="field">
-                        <label>Subject</label>
-                        <input type="text" formControlName="subject" placeholder="Booking / Question / Other" />
-                        @if (subjectCtrl?.touched && subjectCtrl?.invalid) {
-                            <small class="error">Subject is required (min 3 chars).</small>
-                        }
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label>Message</label>
-                    <textarea rows="6" formControlName="message" placeholder="Write your message..."></textarea>
-                    @if (messageCtrl?.touched && messageCtrl?.invalid) {
-                        <small class="error">Message is required (min 10 chars).</small>
+                    @if (serverError) {
+                        <div class="error-box">{{ serverError }}</div>
                     }
-                </div>
 
-                <button class="submit"
-                        type="submit"
-                        [disabled]="sending || form.invalid">
-                    {{ sending ? 'Sending...' : 'Send message' }}
-                </button>
+                    @if (sent) {
+                        <div class="success">Message sent. We’ll get back to you soon.</div>
+                    }
 
 
-                @if (serverError) {
-                    <div class="error-box">{{ serverError }}</div>
-                }
+                </form>
 
-                @if (sent) {
-                    <div class="success">Message sent. We’ll get back to you soon.</div>
-                }
-
-
-            </form>
-
-            <div class="map">
-                <div class="map-placeholder">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57193.57699848759!2d24.699674839126402!3d42.144113530502906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd108a248763d%3A0x6470d1fa6f1338a0!2z0J_Qu9C-0LLQtNC40LI!5e1!3m2!1sbg!2sbg!4v1768826394655!5m2!1sbg!2sbg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="map">
+                    <div class="map-placeholder">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57193.57699848759!2d24.699674839126402!3d42.144113530502906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd108a248763d%3A0x6470d1fa6f1338a0!2z0J_Qu9C-0LLQtNC40LI!5e1!3m2!1sbg!2sbg!4v1768826394655!5m2!1sbg!2sbg"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>

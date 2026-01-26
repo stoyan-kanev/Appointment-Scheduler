@@ -1,4 +1,16 @@
 <div class="bg-container">
-    <img class="img" src="/stoyan.png" alt="">
+    <img class="img" src="/lgoo.png" alt="">
     <button class="btn">Book Now</button>
+    <div class="carousel-strip">
+        <h1 class="our-team-title">Our Team</h1>
+        <div class="carousel-track">
+            <div class="carousel-item" *ngFor="let img of images">
+                <img ngSrc='{{img}}' width="100" height="100" alt="Image" />
+            </div>
+            <div class="carousel-item" *ngFor="let img of images">
+                <img ngSrc='{{img}}' width="100" height="100" alt="Image" />
+
+            </div>
+        </div>
+    </div>
 </div>

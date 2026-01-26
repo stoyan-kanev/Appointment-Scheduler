@@ -1,8 +1,19 @@
+.contact-wrapper {
+    background:
+        radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),
+        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);
+
+    background-attachment: fixed;
+}
+
 .contact-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 4px 28px 50px;
     color: rgba(4, 4, 4, 0.9);
+
 }
 
 .contact-hero {
@@ -80,7 +91,7 @@
     font-weight: 800;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: rgba(7, 7, 7, 0.65);
+    color: rgba(0, 0, 0, 0.65);
 
 }
 

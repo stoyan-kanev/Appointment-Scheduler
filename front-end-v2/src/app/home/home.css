@@ -38,7 +38,7 @@
 .carousel-track {
     display: flex;
     width: fit-content;
-    animation: scroll-left 10s linear infinite;
+    animation: scroll-left 15s linear infinite;
 }
 
 .our-team-title {

@@ -5,7 +5,6 @@
         radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),
         radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),
         linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);
-
     background-attachment: fixed;
 }
 
@@ -14,15 +13,14 @@
     max-width: 1200px;
     margin: 0 auto;
 
-    padding: clamp(14px, 1.6vw, 28px);
+    padding: clamp(12px, 1.2vw, 22px);
 
     display: grid;
     grid-template-columns: repeat(
     auto-fill,
     minmax(clamp(210px, 18vw, 260px), 1fr)
   );
-    gap: clamp(14px, 1.6vw, 28px);
-
+    gap: clamp(12px, 1.2vw, 22px);
 }
 
 .barber-card {
@@ -46,7 +44,7 @@
 
 .barber-image {
     width: 100%;
-    height: clamp(160px, 18vw, 220px);
+    height: clamp(140px, 15vw, 190px);
     overflow: hidden;
 
     position: relative;
@@ -69,17 +67,16 @@
 }
 
 .barber-info {
-    padding: clamp(14px, 1.2vw, 18px) clamp(14px, 1.2vw, 18px)
-    clamp(12px, 1vw, 14px);
+    padding: clamp(12px, 1vw, 16px) clamp(12px, 1vw, 16px) clamp(10px, 0.9vw, 12px);
     display: flex;
     flex-direction: column;
-    gap: clamp(6px, 0.7vw, 8px);
+    gap: clamp(6px, 0.6vw, 8px);
     background: #000000;
 }
 
 .barber-name {
     margin: 0;
-    font-size: clamp(16px, 1.2vw, 18px);
+    font-size: clamp(15px, 1.1vw, 17px);
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.2px;
@@ -87,7 +84,7 @@
 
 .barber-role {
     margin: 0;
-    font-size: clamp(11px, 0.9vw, 12px);
+    font-size: clamp(10px, 0.85vw, 12px);
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -95,21 +92,23 @@
 }
 
 .barber-logo {
-    padding: clamp(10px, 1vw, 14px) clamp(14px, 1.2vw, 18px)
-    clamp(14px, 1.2vw, 18px);
+    flex: 1;
+    padding: clamp(10px, 0.9vw, 12px) clamp(12px, 1vw, 16px);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .barber-logo img {
-    height: clamp(96px, 10vw, 150px);
     width: auto;
+    height: auto;
+    max-height: clamp(90px, 7vw, 115px);
+    max-width: 80%;
     opacity: 0.9;
 }
 
 .flip-card {
-    height: clamp(410px, 40vw, 520px);
+    height: clamp(360px, 32vw, 430px);
     perspective: 1200px;
     cursor: pointer;
 }
@@ -130,6 +129,7 @@
 .flip-face {
     position: absolute;
     inset: 0;
+    height: 100%;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     border-radius: 22px;
@@ -149,40 +149,41 @@
 
 .back-wrap {
     height: 100%;
-    padding: clamp(16px, 1.4vw, 22px);
+    box-sizing: border-box;
+    padding: clamp(14px, 1.1vw, 18px);
     display: flex;
     flex-direction: column;
 }
 
 .back-name {
     margin: 0;
-    font-size: clamp(18px, 1.4vw, 20px);
+    font-size: clamp(16px, 1.2vw, 18px);
     font-weight: 900;
     color: #111;
     letter-spacing: -0.2px;
 }
 
 .back-role {
-    margin: clamp(8px, 1vw, 10px) 0 0;
-    font-size: clamp(11px, 0.9vw, 12px);
+    margin: clamp(6px, 0.8vw, 8px) 0 0;
+    font-size: clamp(10px, 0.85vw, 12px);
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.55);
 }
-
 .back-desc {
-    margin: clamp(12px, 1.2vw, 16px) 0 0;
-    font-size: clamp(13px, 1vw, 14px);
-    line-height: 1.55;
+    margin: clamp(10px, 1vw, 12px) 0 0;
+    font-size: clamp(12px, 0.95vw, 13px);
+    line-height: 1.5;
     color: rgba(0, 0, 0, 0.72);
+    overflow: auto;
+    padding-right: 6px;
 }
 
-/* CTA button */
 .back-btn {
     margin-top: auto;
     width: 100%;
-    padding: clamp(10px, 1vw, 12px) clamp(12px, 1.1vw, 14px);
+    padding: clamp(10px, 0.9vw, 12px) clamp(12px, 1vw, 14px);
     border: 0;
     border-radius: 14px;
     font-weight: 900;

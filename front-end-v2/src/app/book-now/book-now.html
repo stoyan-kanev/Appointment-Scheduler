@@ -1,0 +1,115 @@
+<main class="page">
+    <section class="layout">
+
+        <!-- LEFT PATTERN -->
+        <div
+            class="side side--left"
+            [style.--pattern]="'url(' + patternUrl + ')'"
+            aria-hidden="true"
+        ></div>
+
+        <!-- CENTER PANEL -->
+        <div class="panel">
+
+            <!-- STEP 1 -->
+            <div class="step">
+                <div class="step__head">
+                    <span class="step__badge">1</span>
+                    <h3 class="step__title">Избери услугата</h3>
+                </div>
+
+                <div class="services">
+                    <button class="tile" type="button">
+                        <img class="tile__icon" src="scissors.png" alt="">
+
+                        <div class="tile__text">
+                            <div class="tile__name">Подстригване</div>
+                            <div class="tile__meta">30 мин • 35лв</div>
+                        </div>
+                    </button>
+
+                    <button class="tile" type="button">
+                        <img class="tile__icon" src="beard.png" alt="">
+                        <div class="tile__text">
+                            <div class="tile__name">Брада</div>
+                            <div class="tile__meta">20 мин • 20лв</div>
+                        </div>
+                    </button>
+
+                    <button class="tile" type="button">
+                        <img class="tile__icon" src="face.png" alt="">
+                        <div class="tile__text">
+                            <div class="tile__name">Комбо</div>
+                            <div class="tile__meta">60 мин • 50лв</div>
+                        </div>
+                    </button>
+
+                    <button class="tile" type="button">
+                        <img class="tile__icon" src="razor.png" alt="">
+                        <div class="tile__text">
+                            <div class="tile__name">Бръснене на глава</div>
+                            <div class="tile__meta">30 мин • 20лв</div>
+                        </div>
+                    </button>
+
+                    <button class="tile" type="button">
+                        <img class="tile__icon" src="razor-blade.png" alt="">
+                        <div class="tile__text">
+                            <div class="tile__name">Кралско бръснене</div>
+                            <div class="tile__meta">25 мин • 25лв</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- STEP 2 -->
+            <div class="step">
+                <div class="step__head">
+                    <span class="step__badge">2</span>
+                    <h3 class="step__title">Избери бръснар</h3>
+                </div>
+
+                <div class="barbers">
+                    <button class="avatar" type="button">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                    </button>
+                    <button class="avatar" type="button">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                    </button>
+                    <button class="avatar" type="button">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                    </button>
+                    <button class="avatar" type="button">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                    </button>
+                    <button class="avatar" type="button">
+                        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                    </button>
+                </div>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- STEP 3 -->
+            <div class="step">
+                <div class="step__head">
+                    <span class="step__badge">3</span>
+                    <h3 class="step__title">Избери дата и час</h3>
+                </div>
+
+                <div class="booking-area"></div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT PATTERN -->
+        <div
+            class="side side--right"
+            [style.--pattern]="'url(' + patternUrl + ')'"
+            aria-hidden="true"
+        ></div>
+
+    </section>
+</main>

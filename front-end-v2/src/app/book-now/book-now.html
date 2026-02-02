@@ -1,17 +1,14 @@
 <main class="page">
     <section class="layout">
 
-        <!-- LEFT PATTERN -->
         <div
             class="side side--left"
             [style.--pattern]="'url(' + patternUrl + ')'"
             aria-hidden="true"
         ></div>
 
-        <!-- CENTER PANEL -->
         <div class="panel">
 
-            <!-- STEP 1 -->
             <div class="step">
                 <div class="step__head">
                     <span class="step__badge">1</span>
@@ -19,7 +16,9 @@
                 </div>
 
                 <div class="services">
-                    <button class="tile" type="button">
+                    <button class="tile" type="button"
+                            (click)="selectService('haircut')"
+                            [class.tile--active]="selectedService === 'haircut'">
                         <img class="tile__icon" src="scissors.png" alt="">
 
                         <div class="tile__text">
@@ -28,7 +27,11 @@
                         </div>
                     </button>
 
-                    <button class="tile" type="button">
+                    <button class="tile" type="button"
+                            (click)="selectService('beardTrim')"
+                            [class.tile--active]="selectedService === 'beardTrim'"
+
+                    >
                         <img class="tile__icon" src="beard.png" alt="">
                         <div class="tile__text">
                             <div class="tile__name">Брада</div>
@@ -36,7 +39,10 @@
                         </div>
                     </button>
 
-                    <button class="tile" type="button">
+                    <button class="tile" type="button"
+                            (click)="selectService('comboTrim')"
+                            [class.tile--active]="selectedService === 'comboTrim'"
+                    >
                         <img class="tile__icon" src="face.png" alt="">
                         <div class="tile__text">
                             <div class="tile__name">Комбо</div>
@@ -44,7 +50,11 @@
                         </div>
                     </button>
 
-                    <button class="tile" type="button">
+                    <button class="tile" type="button"
+                            (click)="selectService('headShave')"
+                            [class.tile--active]="selectedService === 'headShave'"
+
+                    >
                         <img class="tile__icon" src="razor.png" alt="">
                         <div class="tile__text">
                             <div class="tile__name">Бръснене на глава</div>
@@ -52,7 +62,11 @@
                         </div>
                     </button>
 
-                    <button class="tile" type="button">
+                    <button class="tile" type="button"
+                            (click)="selectService('kingShave')"
+                            [class.tile--active]="selectedService === 'kingShave'"
+
+                    >
                         <img class="tile__icon" src="razor-blade.png" alt="">
                         <div class="tile__text">
                             <div class="tile__name">Кралско бръснене</div>
@@ -62,9 +76,8 @@
                 </div>
             </div>
 
-            <hr class="divider" />
+            <hr class="divider"/>
 
-            <!-- STEP 2 -->
             <div class="step">
                 <div class="step__head">
                     <span class="step__badge">2</span>
@@ -73,26 +86,35 @@
 
                 <div class="barbers">
                     <button class="avatar" type="button">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                        <img
+                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+                            alt="Barber">
                     </button>
                     <button class="avatar" type="button">
-                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                        <img
+                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
+                            alt="Barber">
                     </button>
                     <button class="avatar" type="button">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                        <img
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"
+                            alt="Barber">
                     </button>
                     <button class="avatar" type="button">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                        <img
+                            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80"
+                            alt="Barber">
                     </button>
                     <button class="avatar" type="button">
-                        <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80" alt="Barber">
+                        <img
+                            src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80"
+                            alt="Barber">
                     </button>
                 </div>
             </div>
 
-            <hr class="divider" />
+            <hr class="divider"/>
 
-            <!-- STEP 3 -->
             <div class="step">
                 <div class="step__head">
                     <span class="step__badge">3</span>
@@ -104,7 +126,6 @@
 
         </div>
 
-        <!-- RIGHT PATTERN -->
         <div
             class="side side--right"
             [style.--pattern]="'url(' + patternUrl + ')'"

@@ -8,6 +8,12 @@ import {Component, Input} from '@angular/core';
 })
 export class BookNowComponent {
 
-
     @Input() patternUrl = 'page.svg';
+    selectedService = ''
+
+
+    selectService(serviceName:string) {
+        this.selectedService = serviceName;
+    }
+
 }

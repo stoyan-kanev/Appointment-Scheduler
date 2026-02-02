@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from rest_framework import status
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from barbers.models import BarbersModel
-from barbers.serialiozer import BarbersSerializer
+from barbers.serialiozer import BarbersSerializer, ListBarbersSerializer
 
 
 # Create your views here.
@@ -28,18 +29,26 @@ class BarbersView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request):
-        barbers = Barbers.objects.all()
+        barbers = BarbersModel.objects.all()
         return Response({'barbers': barbers})
 
     def patch(self, request):
-        barbers = Barbers.objects.all()
+        barbers = BarbersModel.objects.all()
         return Response({'barbers': barbers})
 
     def delete(self, request):
-        barbers = Barbers.objects.all()
+        barbers = BarbersModel.objects.all()
         return Response({'barbers': barbers})
 
 
 
+class ListBarbersView(APIView):
+    permission_classes = (AllowAny,)
+    queryset = BarbersModel.objects.all()
+    serializer_class = ListBarbersSerializer
 
+    def get(self, request):
+        barbers = BarbersModel.objects.all()
+        serializer = ListBarbersSerializer(barbers, many=True)
 
+        return Response(serializer.data, status=status.HTTP_200_OK)

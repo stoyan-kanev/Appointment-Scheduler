@@ -8,6 +8,12 @@ export interface Barber {
     role: string;
     is_barber: boolean;
 }
+export interface ListBarber {
+    id: string;
+    name: string;
+    role: string;
+    image:string
+}
 
 @Injectable({providedIn: 'root'})
 export class BarberService {
@@ -17,6 +23,9 @@ export class BarberService {
 
 
     getBarbers = () => {
-        return this.http.get<Barber[]>(`${this.baseUrl}/barbers/`);
+        return this.http.get<Barber[]>(`${this.baseUrl}/barbers`);
+    }
+    listBarbers = () => {
+        return this.http.get<ListBarber[]>(`${this.baseUrl}/barbers/list`);
     }
 }

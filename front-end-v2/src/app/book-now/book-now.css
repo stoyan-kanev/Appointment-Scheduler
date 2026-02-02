@@ -132,7 +132,11 @@
     font-size: 12px;
     opacity: 0.9;
 }
-
+.barber-wrapper-select{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .barbers {
     display: flex;
     gap: 26px;
@@ -141,6 +145,9 @@
     padding: 2px 4px 6px;
 }
 
+.avatar--active {
+    border-bottom: 3px solid green;
+}
 .avatar {
     width: 68px;
     height: 68px;

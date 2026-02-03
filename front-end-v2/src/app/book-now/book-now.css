@@ -89,8 +89,7 @@
 .tile {
     border: 0;
     border-radius: 10px;
-    background: #3b3b3b;
-    color: #fff;
+    color: #000000;
     padding: 14px 10px;
     cursor: pointer;
 
@@ -102,22 +101,24 @@
 }
 .tile--active {
     /*border: 3px solid #45d527;*/
-    background: #837e7e;
+    border-bottom: 3px solid green;
 
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+    /*box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);*/
 }
-.tile:hover {
-    transform: translateY(-1px);
-    /*background: #2f2f2f;*/
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-}
+/*.tile:hover {*/
+/*    transform: translateY(-1px);*/
+/*    !*background: #2f2f2f;*!*/
+/*    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);*/
+/*}*/
 
 .tile__icon {
     font-size: 28px;
     width: 60px;
     line-height: 1;
 }
-
+.smaller-img {
+    width: 60px;
+}
 .tile__text {
     text-align: center;
 }
@@ -147,6 +148,7 @@
 
 .avatar--active {
     border-bottom: 3px solid green;
+    border-radius: 10px
 }
 .avatar {
     width: 68px;

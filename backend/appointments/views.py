@@ -32,7 +32,14 @@ class AppointmentViewSet(APIView):
 
                 data["date_time"] = parsed_datetime
                 print("🔹 Final Datetime Sent for Saving:", parsed_datetime)
-
+            barber_name = data.get("barber_name")
+            if barber_name and parsed_datetime:
+                exists = Appointment.objects.filter(
+                    barber_name=barber_name,
+                    date_time=parsed_datetime
+                ).exists()
+                if exists:
+                    return Response({"error": "Slot already reserved."}, status=409)
         serializer = AppointmentSerializer(data=data)
         if serializer.is_valid():
             instance = serializer.save()

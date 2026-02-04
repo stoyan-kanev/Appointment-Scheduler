@@ -122,7 +122,106 @@
                     <h3 class="step__title">Избери дата и час</h3>
                 </div>
 
-                <div class="booking-area"></div>
+                <div class="booking-area" [class.booking-area--disabled]="!canPickDateTime">
+
+                    <div class="booking-toolbar">
+                        <label class="booking-label">
+                            Дата
+                            <input
+                                class="booking-input"
+                                type="date"
+                                [min]="minDate"
+                                [disabled]="!canPickDateTime"
+                                [(ngModel)]="selectedDate"
+                                (ngModelChange)="onDateChange($event)"
+                            />
+                        </label>
+
+                    </div>
+
+                    @if (!canPickDateTime) {
+                        <p class="booking-hint">Първо избери услуга и бръснар.</p>
+                    } @else if (!selectedDate) {
+                        <p class="booking-hint">Избери дата, за да видиш свободните часове.</p>
+                    } @else if (availabilityLoading) {
+                        <p class="booking-hint">Зареждане…</p>
+                    } @else {
+                        <div class="slots">
+                            @for (slot of timeSlots; track slot) {
+                                <button
+                                    type="button"
+                                    class="slot"
+                                    [class.slot--active]="selectedSlot === slot"
+                                    [disabled]="!isSlotFree(slot)"
+                                    (click)="selectSlot(slot)"
+                                >
+                                    <span class="slot__time">{{ slot }}</span>
+                                    <span class="slot__state">{{ isSlotFree(slot) ? 'Свободно' : 'Заето' }}</span>
+                                </button>
+                            }
+                        </div>
+                        @if (selectedSlot) {
+                            <form class="client-form" (ngSubmit)="confirmBooking()" #f="ngForm">
+
+                                <div class="form-row">
+                                    <label>
+                                        Име
+                                        <input
+                                            type="text"
+                                            name="first_name"
+                                            required
+                                            [(ngModel)]="clientForm.first_name"
+                                        />
+                                    </label>
+
+                                    <label>
+                                        Фамилия
+                                        <input
+                                            type="text"
+                                            name="last_name"
+                                            required
+                                            [(ngModel)]="clientForm.last_name"
+                                        />
+                                    </label>
+                                </div>
+
+                                <div class="form-row">
+                                    <label>
+                                        Имейл
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            required
+                                            [(ngModel)]="clientForm.email"
+                                        />
+                                    </label>
+
+                                    <label>
+                                        Телефон
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            required
+                                            [(ngModel)]="clientForm.phone"
+                                        />
+                                    </label>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="booking-save"
+                                    [disabled]="f.invalid || bookingInFlight"
+                                >
+                                    Потвърди резервацията
+                                </button>
+
+                            </form>
+                        }
+                    }
+
+
+                </div>
+
             </div>
 
         </div>

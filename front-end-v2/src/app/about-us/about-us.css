@@ -1,12 +1,17 @@
 .about-main{
     padding-bottom: 20%;
+    /*background:*/
+    /*    radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),*/
+    /*    radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),*/
+    /*    radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),*/
+    /*    linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);*/
+    /*background-attachment: fixed;*/
     background:
-        radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),
-        radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),
-        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),
-        linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);
-    background-attachment: fixed;
+        radial-gradient(1200px 800px at 10% 30%, rgba(255, 255, 255, 0.53), transparent 60%),
+        radial-gradient(1200px 800px at 80% 90%, rgba(255, 255, 255, 0.18), transparent 60%),
+        #0f1115;
 }
+
 
 .about-wrapper {
     max-width: 1200px;
@@ -62,6 +67,7 @@
     display: block;
     padding: clamp(10px, 1vw, 18px);
     background: #646469;
+    
 }
 
 .about-text-wrapper {
@@ -73,14 +79,14 @@
     font-size: clamp(34px, 3vw, 44px);
     font-weight: 950;
     letter-spacing: -0.6px;
-    color: #111;
+    color: #ffffff;
 }
 
 .about-text-wrapper p {
     margin: 0 0 14px;
     line-height: 1.75;
     font-size: 15px;
-    color: rgba(0, 0, 0, 0.78);
+    color: rgba(241, 236, 236, 0.78);
 }
 
 .about-text-wrapper strong {

@@ -1,11 +1,15 @@
 .barber-wrapper {
     padding-bottom: 20%;
+    /*background:*/
+    /*    radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),*/
+    /*    radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),*/
+    /*    radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),*/
+    /*    linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);*/
+    /*background-attachment: fixed;*/
     background:
-        radial-gradient(circle at 20% 15%, rgba(100, 108, 255, 0.18), transparent 55%),
-        radial-gradient(circle at 80% 30%, rgba(19, 167, 224, 0.14), transparent 55%),
-        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.06), transparent 60%),
-        linear-gradient(180deg, #ffffff 0%, #f6f7ff 40%, #ffffff 100%);
-    background-attachment: fixed;
+        radial-gradient(1200px 800px at 40% 10%, rgba(255, 255, 255, 0.53), transparent 60%),
+        radial-gradient(1200px 800px at 60% 90%, rgba(255, 255, 255, 0.18), transparent 60%),
+        #0f1115;
 }
 
 .barber-content {

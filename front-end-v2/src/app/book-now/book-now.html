@@ -122,7 +122,7 @@
                     <h3 class="step__title">Избери дата и час</h3>
                 </div>
 
-                <div class="booking-area" [class.booking-area--disabled]="!canPickDateTime">
+                <div #bookingArea class="booking-area" [class.booking-area--disabled]="!canPickDateTime">
 
                     <div class="booking-toolbar">
                         <label class="booking-label">
@@ -161,7 +161,7 @@
                             }
                         </div>
                         @if (selectedSlot) {
-                            <form class="client-form" (ngSubmit)="confirmBooking()" #f="ngForm">
+                            <form #clientFormEl class="client-form" (ngSubmit)="confirmBooking()" #f="ngForm">
 
                                 <div class="form-row">
                                     <label>

@@ -4,13 +4,20 @@
     justify-content: center;
     flex-direction: column;
     padding-bottom: 2rem;
-    background: #E6D875;
-    background: linear-gradient(180deg, rgba(230, 216, 117, 1) 0%, rgba(207, 207, 176, 1) 100%);
+    /*background: #E6D875;*/
+    /*background: linear-gradient(180deg, rgba(230, 216, 117, 1) 0%, rgba(207, 207, 176, 1) 100%);*/
+    /*background: #D1D1D1;*/
+    /*background: linear-gradient(0deg, rgba(209, 209, 209, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(209, 209, 209, 1) 100%);*/
+    background:
+        radial-gradient(1200px 800px at 40% 10%, rgba(255, 255, 255, 0.53), transparent 60%),
+        radial-gradient(1200px 800px at 80% 90%, rgba(255, 255, 255, 0.18), transparent 60%),
+        #0f1115;
 }
 
 .img {
     width: 30%;
     margin-bottom: 20px;
+    filter: drop-shadow(0 0 0 rgba(0,0,0,0.8));
 }
 
 .btn {
@@ -43,6 +50,7 @@
 
 .our-team-title {
     text-align: center;
+    color: #d0cccc;
 }
 
 .carousel-item {

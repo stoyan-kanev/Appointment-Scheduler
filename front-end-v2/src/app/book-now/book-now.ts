@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { finalize, Observable, shareReplay } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { RoleLabelPipe } from '../pipe/role-label.pipe';
@@ -15,7 +15,9 @@ import { FormsModule } from '@angular/forms';
 export class BookNowComponent {
     @Input() patternUrl = 'page.svg';
 
-    selectedService = '';
+    @ViewChild('bookingArea') bookingArea?: ElementRef<HTMLDivElement>;
+    @ViewChild('clientFormEl') clientFormEl?: ElementRef<HTMLElement>;    selectedService = '';
+
     selectedBarber: ListBarber | undefined;
 
     barbers$: Observable<ListBarber[]>;
@@ -122,7 +124,9 @@ export class BookNowComponent {
     selectSlot(slot: string) {
         if (!this.isSlotFree(slot)) return;
         this.selectedSlot = slot;
-        // не чистим формата тук, за да не дразним user-а ако си е попълнил и сменя слот
+        setTimeout(() => {
+            this.scrollBookingAreaToForm();
+        }, 0);
     }
 
     confirmBooking() {
@@ -171,7 +175,21 @@ export class BookNowComponent {
             }
         });
     }
+    private scrollBookingAreaToForm() {
+        const container = this.bookingArea?.nativeElement;
+        const target = this.clientFormEl?.nativeElement;
 
+        if (!container || !target) return;
+
+        // позиция на формата спрямо контейнера
+        const top =
+            target.offsetTop - container.offsetTop - 12; // малък padding
+
+        container.scrollTo({
+            top,
+            behavior: 'smooth',
+        });
+    }
     private resetClientForm() {
         this.clientForm = { first_name: '', last_name: '', email: '', phone: '' };
     }

@@ -3,7 +3,10 @@
     display: flex;
     justify-content: center;
     padding: 24px 12px;
-    background: #fff;
+    background:
+        radial-gradient(1200px 800px at 10% 10%, rgba(255, 255, 255, 0.53), transparent 60%),
+        radial-gradient(1200px 800px at 90% 90%, rgba(255, 255, 255, 0.48), transparent 60%),
+        #0f1115;
 }
 
 .layout {
@@ -260,7 +263,6 @@
     text-align: left;
     transition: transform .12s ease, border-color .12s ease;
 }
-
 .slot:disabled {
     cursor: not-allowed;
     opacity: .55;

@@ -115,12 +115,15 @@
 /*}*/
 
 .tile__icon {
+    width: 130px;
     font-size: 28px;
-    width: 60px;
     line-height: 1;
 }
 .smaller-img {
-    width: 60px;
+    width: 70px;
+}
+.bigger-gap{
+    gap:40px !important;
 }
 .tile__text {
     text-align: center;

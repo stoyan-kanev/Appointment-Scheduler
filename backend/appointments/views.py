@@ -1,6 +1,10 @@
 from django.shortcuts import get_object_or_404
 from django.utils.dateparse import parse_datetime
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
+from barbers.models import BarbersModel
+from users.views import get_user_from_cookie
 from .serializers import AppointmentSerializer
 from django.utils.timezone import make_aware, get_current_timezone
 from django.utils.timezone import localtime
@@ -115,3 +119,37 @@ class GetAppointmentByDateTime(APIView):
         except ValueError:
             return Response({"error": "Invalid date or time format. Expected YYYY-MM-DD and HH:MM"},
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetMyAppointments(APIView):
+    def get(self, request):
+        user = get_user_from_cookie(request)
+        if not user:
+            return Response({'error': 'Unauthenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        date = request.GET.get('date')
+        if not date:
+            return Response({'error': 'Missing date'}, status=400)
+
+        try:
+            date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+        except ValueError:
+            return Response({'error': 'Invalid date format. Expected YYYY-MM-DD'}, status=400)
+
+        barber = BarbersModel.objects.filter(users=user).first()
+        if not barber:
+            return Response({'error': 'User is not linked to a barber'}, status=403)
+
+        qs = Appointment.objects.filter(
+            barber_name=barber.name,
+            date_time__date=date_obj
+        ).order_by('date_time')
+
+        serializer = AppointmentSerializer(qs, many=True)
+        return Response(serializer.data, status=200)
+class MarkAppointmentDone(APIView):
+    def patch(self, request, id):
+        appt = get_object_or_404(Appointment, id=id)
+        appt.is_done = True
+        appt.save()
+        return Response({"ok": True, "id": appt.id, "is_done": appt.is_done})

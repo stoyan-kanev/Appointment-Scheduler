@@ -36,31 +36,41 @@ class UserLoginView(APIView):
                     return Response({'error': 'User account is disabled'}, status=status.HTTP_403_FORBIDDEN)
 
                 token, _ = Token.objects.get_or_create(user=user)
-
                 user_data = UserSerializer(user).data
 
-                response = Response(user_data, status=status.HTTP_200_OK)
-                response.set_cookie('token', str(token))
-                return response
+                response = Response({"user": user_data}, status=status.HTTP_200_OK)
 
+                # 🔴 ТУК Е ВАЖНОТО – сетваме token в cookie
+                response.set_cookie(
+                    'token',
+                    str(token),
+                    httponly=True,   # JS не може да го чете -> по-сигурно
+                    samesite='Lax',  # достатъчно за SPA на същия домейн
+                    secure=False,    # True в production с HTTPS
+                )
+
+                return response
 
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def get_user_from_cookie(request):
+    token_key = request.COOKIES.get('token')
+    if not token_key:
+        return None
+    try:
+        token = Token.objects.get(key=token_key)
+        return token.user
+    except Token.DoesNotExist:
+        return None
+
 
 @api_view(['GET'])
 def verify_token(request):
-    token_key = request.COOKIES.get('token')
-
-    if not token_key:
-        return Response({'error': 'Token missing'}, status=status.HTTP_401_UNAUTHORIZED)
-
-    try:
-        token = Token.objects.get(key=token_key)
-        user = token.user
-    except Token.DoesNotExist:
-        return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+    user = get_user_from_cookie(request)
+    if not user:
+        return Response({'error': 'Token missing or invalid'}, status=status.HTTP_401_UNAUTHORIZED)
 
     return Response({'message': 'Token is valid', 'user': user.username}, status=200)
 
@@ -69,3 +79,5 @@ def logout(request):
     response = Response({"message": "Logged out"}, status=status.HTTP_200_OK)
     response.delete_cookie('token')
     return response
+
+

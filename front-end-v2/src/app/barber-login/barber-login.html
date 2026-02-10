@@ -1,0 +1,21 @@
+<main class="page">
+    <section class="card">
+        <h2>Вход за бръснар</h2>
+
+        <form (ngSubmit)="submit()" #f="ngForm">
+            <label>
+                Username
+                <input type="text" name="username" required [(ngModel)]="username" />
+            </label>
+
+            <label>
+                Password
+                <input type="password" name="password" required [(ngModel)]="password" />
+            </label>
+
+            <button type="submit" [disabled]="f.invalid || loading">
+                {{ loading ? 'Влизане…' : 'Вход' }}
+            </button>
+        </form>
+    </section>
+</main>

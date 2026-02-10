@@ -1,0 +1,56 @@
+<main class="page">
+    <section class="panel">
+
+        <header class="head">
+            <div class="title">
+                <h2>Моите часове</h2>
+                <p>График за избраната дата.</p>
+            </div>
+
+            <div class="controls">
+                <label class="field">
+                    Дата
+                    <input
+                        type="date"
+                        [(ngModel)]="selectedDate"
+                        (ngModelChange)="onDateChange($event)"
+                    />
+                </label>
+
+                <button class="btn" type="button" (click)="load()" [disabled]="loading">
+                    Обнови
+                </button>
+            </div>
+        </header>
+
+        <div class="body">
+            @if (loading) {
+                <div class="state">Зареждане…</div>
+            } @else if (!appointments.length) {
+                <div class="state">Няма записани часове за тази дата.</div>
+            } @else {
+                <div class="list">
+                    @for (appt of appointments; track appt.id) {
+                        <article class="card" [ngClass]="{ 'card--done': appt.is_done }">
+                            <div class="left">
+                                <div class="time">{{ getTime(appt.date_time) }}</div>
+                                <div class="service">{{ appt.service_type }}</div>
+                                <div class="client">
+                                    <div class="name">{{ appt.first_name }} {{ appt.last_name }}</div>
+                                    <div class="meta">{{ appt.phone }} • {{ appt.email }}</div>
+                                </div>
+                            </div>
+
+                            <div class="right">
+                <span class="pill" [ngClass]="{ 'pill--done': appt.is_done, 'pill--pending': !appt.is_done }">
+                  {{ appt.is_done ? 'Изпълнен' : 'Очаква' }}
+                </span>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </div>
+
+    </section>
+</main>
